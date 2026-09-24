@@ -1,3 +1,41 @@
+export const IPHONE_MODELS_BY_SERIES = [
+  {
+    series: 'iPhone 16 Series',
+    models: [
+      'iPhone 16 Pro Max',
+      'iPhone 16 Pro',
+      'iPhone 16 Plus',
+      'iPhone 16'
+    ]
+  },
+  {
+    series: 'iPhone 15 Series',
+    models: [
+      'iPhone 15 Pro Max',
+      'iPhone 15 Pro',
+      'iPhone 15 Plus',
+      'iPhone 15'
+    ]
+  },
+  {
+    series: 'iPhone 14 Series',
+    models: [
+      'iPhone 14 Pro Max',
+      'iPhone 14 Pro',
+      'iPhone 14 Plus',
+      'iPhone 14'
+    ]
+  },
+  {
+    series: 'iPhone 13 Series',
+    models: [
+      'iPhone 13 Pro Max',
+      'iPhone 13 Pro',
+      'iPhone 13'
+    ]
+  }
+];
+
 export const IPHONE_MODELS = [
   { id: 'all', name: 'All iPhone Models', badge: 'All Models' },
   // iPhone 16 Series

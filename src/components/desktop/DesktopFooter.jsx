@@ -106,6 +106,12 @@ export default function DesktopFooter({ setActiveTab, onOpenLegal }) {
                     Contact & Store
                   </button>
                 </li>
+                <li>
+                  <button onClick={() => handleNav('admin')} className="hover:text-amber-400 transition text-amber-500/80 font-bold text-left cursor-pointer flex items-center gap-1">
+                    <span>Admin Portal</span>
+                    <span className="text-[9px] px-1.5 py-0.2 bg-amber-500/20 text-amber-400 rounded">Secure</span>
+                  </button>
+                </li>
               </ul>
             </div>
 

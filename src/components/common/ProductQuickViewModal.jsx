@@ -3,11 +3,13 @@ import { X, Star, ShieldCheck, ShoppingBag, Sparkles, MessageSquare, Check } fro
 import { useProduct } from '../../context/ProductContext';
 import { useCart } from '../../context/CartContext';
 import { useOrder } from '../../context/OrderContext';
+import { useAuth } from '../../context/AuthContext';
 
 export default function ProductQuickViewModal() {
   const { quickViewProduct, setQuickViewProduct, openCustomizer } = useProduct();
   const { addToCart } = useCart();
-  const { generateSingleProductWhatsAppURL } = useOrder();
+  const { generateSingleProductWhatsAppURL, createOrder } = useOrder();
+  const { currentUser, recordCustomerFromCheckout } = useAuth();
 
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedModel, setSelectedModel] = useState(null);
@@ -32,7 +34,40 @@ export default function ProductQuickViewModal() {
   };
 
   const handleWhatsApp = () => {
+    const customer = {
+      name: currentUser?.name || 'Storefront Visitor',
+      email: currentUser?.email || 'customer@casematrix.in',
+      phone: currentUser?.phone || '+91 93846 94189',
+      address: 'WhatsApp Direct Order',
+      city: 'Express Avenue',
+      state: 'Tamil Nadu',
+      postalCode: '600002',
+      country: 'India',
+      paymentMethod: 'WhatsApp Express Order (UPI)'
+    };
+    if (createOrder) {
+      createOrder(
+        customer,
+        [
+          {
+            id: quickViewProduct.id,
+            name: quickViewProduct.name,
+            price: quickViewProduct.price,
+            image: displayImage,
+            model: activeModel,
+            selectedModel: activeModel,
+            color: activeColor,
+            quantity: 1
+          }
+        ],
+        { subtotal: quickViewProduct.price, discountAmount: 0, shippingFee: 0, total: quickViewProduct.price }
+      );
+    }
+    if (recordCustomerFromCheckout && currentUser) {
+      recordCustomerFromCheckout(customer);
+    }
     const url = generateSingleProductWhatsAppURL(quickViewProduct, activeColor, activeModel);
+    setQuickViewProduct(null);
     window.open(url, '_blank');
   };
 
@@ -74,23 +109,27 @@ export default function ProductQuickViewModal() {
               )}
             </div>
 
-            {/* Thumbnail Carousel */}
-            {quickViewProduct.gallery && quickViewProduct.gallery.length > 1 && (
-              <div className="flex gap-2 overflow-x-auto pb-1">
-                {quickViewProduct.gallery.map((img, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => setSelectedImage(img)}
-                    className={`w-16 h-16 rounded-xl overflow-hidden border-2 shrink-0 transition ${
-                      displayImage === img ? 'border-amber-600 ring-2 ring-amber-500/30' : 'border-slate-200 opacity-70 hover:opacity-100'
-                    }`}
-                  >
-                    <img src={img} alt="Thumbnail" className={`w-full h-full ${quickViewProduct.imageFit === 'contain' ? 'object-contain' : 'object-cover'}`} />
-                  </button>
-                ))}
-              </div>
-            )}
+            {/* Thumbnail Carousel for Multiple Images */}
+            {(() => {
+              const galleryList = quickViewProduct.gallery || quickViewProduct.images || [];
+              if (galleryList.length <= 1) return null;
+              return (
+                <div className="flex gap-2 overflow-x-auto pb-1">
+                  {galleryList.map((img, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setSelectedImage(img)}
+                      className={`w-14 h-14 rounded-xl overflow-hidden border-2 shrink-0 transition ${
+                        displayImage === img ? 'border-amber-600 ring-2 ring-amber-500/30 scale-105' : 'border-slate-200 opacity-70 hover:opacity-100'
+                      }`}
+                    >
+                      <img src={img} alt={`Thumbnail ${i + 1}`} className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+              );
+            })()}
           </div>
 
           {/* Details & Selection (Right) */}

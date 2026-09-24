@@ -3,11 +3,13 @@ import { Star, Sparkles, Eye, ShoppingBag, MessageSquare, Smartphone } from 'luc
 import { useProduct } from '../../context/ProductContext';
 import { useCart } from '../../context/CartContext';
 import { useOrder } from '../../context/OrderContext';
+import { useAuth } from '../../context/AuthContext';
 
 export default function DesktopProductCard({ product }) {
   const { setQuickViewProduct, openCustomizer } = useProduct();
   const { addToCart } = useCart();
-  const { generateSingleProductWhatsAppURL } = useOrder();
+  const { generateSingleProductWhatsAppURL, createOrder } = useOrder();
+  const { currentUser, recordCustomerFromCheckout } = useAuth();
 
   const [activeColor, setActiveColor] = useState(product.colors ? product.colors[0] : null);
   const [activeModel, setActiveModel] = useState(product.targetModel || (product.compatibleModels ? product.compatibleModels[0] : 'iPhone 16 Pro Max'));
@@ -22,6 +24,38 @@ export default function DesktopProductCard({ product }) {
 
   const handleWhatsApp = (e) => {
     e.stopPropagation();
+    const customer = {
+      name: currentUser?.name || 'Storefront Visitor',
+      email: currentUser?.email || 'customer@casematrix.in',
+      phone: currentUser?.phone || '+91 93846 94189',
+      address: 'WhatsApp Direct Order',
+      city: 'Express Avenue',
+      state: 'Tamil Nadu',
+      postalCode: '600002',
+      country: 'India',
+      paymentMethod: 'WhatsApp Express Order (UPI)'
+    };
+    if (createOrder) {
+      createOrder(
+        customer,
+        [
+          {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            image: currentImage,
+            model: activeModel,
+            selectedModel: activeModel,
+            color: activeColor,
+            quantity: 1
+          }
+        ],
+        { subtotal: product.price, discountAmount: 0, shippingFee: 0, total: product.price }
+      );
+    }
+    if (recordCustomerFromCheckout && currentUser) {
+      recordCustomerFromCheckout(customer);
+    }
     const url = generateSingleProductWhatsAppURL(product, activeColor, activeModel);
     window.open(url, '_blank');
   };

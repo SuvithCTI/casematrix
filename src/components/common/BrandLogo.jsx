@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function BrandLogo({ size = 'md', showSubtitle = true, className = '' }) {
+export default function BrandLogo({ size = 'md', showSubtitle = true, className = '', variant = 'dark' }) {
   // Size variants
   const badgeSizes = {
     sm: 'w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl',
@@ -15,10 +15,12 @@ export default function BrandLogo({ size = 'md', showSubtitle = true, className 
   };
 
   const subtitleSizes = {
-    sm: 'text-[7px] sm:text-[8px] font-extrabold tracking-widest uppercase text-amber-400',
-    md: 'text-[8px] sm:text-[10px] font-extrabold tracking-widest uppercase text-amber-400',
-    lg: 'text-[10px] sm:text-xs font-extrabold tracking-widest uppercase text-amber-400',
+    sm: 'text-[7px] sm:text-[8px] font-extrabold tracking-widest uppercase',
+    md: 'text-[8px] sm:text-[10px] font-extrabold tracking-widest uppercase',
+    lg: 'text-[10px] sm:text-xs font-extrabold tracking-widest uppercase',
   };
+
+  const isLight = variant === 'light';
 
   return (
     <div className={`flex items-center gap-2.5 sm:gap-3 ${className}`}>
@@ -89,11 +91,11 @@ export default function BrandLogo({ size = 'md', showSubtitle = true, className 
 
       {/* Typography */}
       <div>
-        <span className={`${titleSizes[size] || titleSizes.md} text-white flex items-center gap-1 leading-none`}>
+        <span className={`${titleSizes[size] || titleSizes.md} ${isLight ? 'text-slate-900' : 'text-white'} flex items-center gap-1 leading-none font-black`}>
           Case Matrix
         </span>
         {showSubtitle && (
-          <p className={`${subtitleSizes[size] || subtitleSizes.md} mt-1 leading-none`}>
+          <p className={`${subtitleSizes[size] || subtitleSizes.md} ${isLight ? 'text-amber-600' : 'text-amber-400'} mt-1 leading-none font-bold`}>
             iPhone Studio India
           </p>
         )}

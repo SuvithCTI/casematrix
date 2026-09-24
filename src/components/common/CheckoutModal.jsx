@@ -2,18 +2,20 @@ import React, { useState } from 'react';
 import { X, ShieldCheck, CreditCard, QrCode, Truck, Check, MessageSquare, ArrowRight } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useOrder } from '../../context/OrderContext';
+import { useAuth } from '../../context/AuthContext';
 
 export default function CheckoutModal() {
   const { cartItems, subtotal, discountAmount, shippingFee, total, appliedPromoName, clearCart } = useCart();
   const { isCheckoutModalOpen, setIsCheckoutModalOpen, createOrder, generateWhatsAppOrderURL } = useOrder();
+  const { currentUser, recordCustomerFromCheckout } = useAuth();
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
+    name: currentUser?.name || 'Aditya Verma',
+    email: currentUser?.email || 'user@casematrix.in',
+    phone: currentUser?.phone || '+91 98765 43210',
     address: '',
     city: '',
-    state: 'Maharashtra',
+    state: 'Tamil Nadu',
     postalCode: '',
     country: 'India',
     paymentMethod: 'Instant UPI / QR Code',
@@ -21,6 +23,17 @@ export default function CheckoutModal() {
   });
 
   const [isProcessing, setIsProcessing] = useState(false);
+
+  React.useEffect(() => {
+    if (isCheckoutModalOpen) {
+      setFormData(prev => ({
+        ...prev,
+        name: prev.name || currentUser?.name || 'Aditya Verma',
+        email: prev.email || currentUser?.email || 'user@casematrix.in',
+        phone: prev.phone || currentUser?.phone || '+91 98765 43210',
+      }));
+    }
+  }, [isCheckoutModalOpen, currentUser]);
 
   if (!isCheckoutModalOpen) return null;
 
@@ -37,20 +50,38 @@ export default function CheckoutModal() {
 
     setIsProcessing(true);
     setTimeout(() => {
-      createOrder(formData, cartItems, { subtotal, discountAmount, shippingFee, total, appliedPromoName });
+      const orderCustomer = {
+        ...formData,
+        name: formData.name.trim(),
+        email: formData.email.trim() || currentUser?.email || 'user@casematrix.in',
+        phone: formData.phone.trim()
+      };
+      createOrder(orderCustomer, cartItems, { subtotal, discountAmount, shippingFee, total, appliedPromoName });
+      recordCustomerFromCheckout(orderCustomer);
       clearCart();
       setIsProcessing(false);
       setIsCheckoutModalOpen(false);
-    }, 1200);
+    }, 1000);
   };
 
   const handleWhatsAppCheckout = () => {
+    const orderCustomer = {
+      ...formData,
+      name: formData.name?.trim() || currentUser?.name || 'Aditya Verma',
+      email: formData.email?.trim() || currentUser?.email || 'user@casematrix.in',
+      phone: formData.phone?.trim() || currentUser?.phone || '+91 98765 43210',
+      paymentMethod: 'WhatsApp Express Order (UPI)'
+    };
+    createOrder(orderCustomer, cartItems, { subtotal, discountAmount, shippingFee, total, appliedPromoName });
+    recordCustomerFromCheckout(orderCustomer);
     const url = generateWhatsAppOrderURL(
       cartItems,
       { subtotal, discountAmount, shippingFee, total },
-      formData,
+      orderCustomer,
       formData.notes
     );
+    clearCart();
+    setIsCheckoutModalOpen(false);
     window.open(url, '_blank');
   };
 
@@ -110,7 +141,7 @@ export default function CheckoutModal() {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Rahul Sharma"
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white"
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white"
                 />
               </div>
               <div>
@@ -122,7 +153,7 @@ export default function CheckoutModal() {
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="+91 93846 94189"
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white"
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white"
                 />
               </div>
             </div>
@@ -135,7 +166,7 @@ export default function CheckoutModal() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="rahul@gmail.com"
-                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white"
+                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white"
               />
             </div>
 
@@ -148,11 +179,11 @@ export default function CheckoutModal() {
                 value={formData.address}
                 onChange={handleChange}
                 placeholder="Flat 402, Signature Tower, MG Road"
-                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white"
+                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white"
               />
             </div>
 
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
                 <label className="text-xs font-semibold text-slate-600 block mb-1">City *</label>
                 <input
@@ -162,7 +193,7 @@ export default function CheckoutModal() {
                   value={formData.city}
                   onChange={handleChange}
                   placeholder="Mumbai"
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white"
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white"
                 />
               </div>
               <div>
@@ -171,7 +202,7 @@ export default function CheckoutModal() {
                   name="state"
                   value={formData.state}
                   onChange={handleChange}
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white"
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2.5 text-sm sm:text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white"
                 >
                   <option value="Maharashtra">Maharashtra</option>
                   <option value="Delhi NCR">Delhi NCR</option>
@@ -196,7 +227,7 @@ export default function CheckoutModal() {
                   value={formData.postalCode}
                   onChange={handleChange}
                   placeholder="400001"
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white"
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white"
                 />
               </div>
             </div>

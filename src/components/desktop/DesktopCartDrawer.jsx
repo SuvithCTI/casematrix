@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, ShieldCheck, MessageSquare, Sparkles } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useOrder } from '../../context/OrderContext';
+import { useAuth } from '../../context/AuthContext';
 
 export default function DesktopCartDrawer() {
   const {
@@ -22,7 +23,8 @@ export default function DesktopCartDrawer() {
     shippingThreshold,
   } = useCart();
 
-  const { setIsCheckoutModalOpen, generateWhatsAppOrderURL } = useOrder();
+  const { setIsCheckoutModalOpen, createOrder, generateWhatsAppOrderURL } = useOrder();
+  const { currentUser, recordCustomerFromCheckout } = useAuth();
   const [promoMsg, setPromoMsg] = useState(null);
 
   if (!isCartOpen) return null;
@@ -42,7 +44,22 @@ export default function DesktopCartDrawer() {
   };
 
   const handleWhatsAppCheckout = () => {
-    const url = generateWhatsAppOrderURL(cartItems, { subtotal, discountAmount, shippingFee, total });
+    const customer = {
+      name: currentUser?.name || 'Aditya Verma',
+      email: currentUser?.email || 'user@casematrix.in',
+      phone: currentUser?.phone || '+91 98765 43210',
+      address: 'Express Delivery Order',
+      city: 'Chennai',
+      state: 'Tamil Nadu',
+      postalCode: '600002',
+      paymentMethod: 'WhatsApp Express Order (UPI)'
+    };
+    createOrder(customer, cartItems, { subtotal, discountAmount, shippingFee, total, appliedPromoName });
+    if (recordCustomerFromCheckout) {
+      recordCustomerFromCheckout(customer);
+    }
+    const url = generateWhatsAppOrderURL(cartItems, { subtotal, discountAmount, shippingFee, total }, customer);
+    setIsCartOpen(false);
     window.open(url, '_blank');
   };
 

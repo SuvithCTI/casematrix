@@ -3,7 +3,7 @@ import { X, Send, MessageSquare, Building, CheckCircle2 } from 'lucide-react';
 import { useOrder } from '../../context/OrderContext';
 
 export default function EnquiryModal() {
-  const { isEnquiryModalOpen, setIsEnquiryModalOpen, triggerConfetti } = useOrder();
+  const { isEnquiryModalOpen, setIsEnquiryModalOpen, triggerConfetti, addEnquiry } = useOrder();
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -20,6 +20,9 @@ export default function EnquiryModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (addEnquiry) {
+      addEnquiry(formData);
+    }
     setSubmitted(true);
     triggerConfetti();
   };

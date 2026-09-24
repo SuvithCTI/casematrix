@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MessageSquare, Mail, Phone, MapPin, Send, CheckCircle2, HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { useOrder } from '../../context/OrderContext';
+import { IPHONE_MODELS_BY_SERIES } from '../../data/categories';
 
 export default function DesktopContactView() {
   const { triggerConfetti, setIsEnquiryModalOpen } = useOrder();
@@ -164,7 +165,7 @@ export default function DesktopContactView() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="Aditya Verma"
-                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-500"
+                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-slate-900 focus:outline-none focus:border-amber-500"
                     />
                   </div>
                   <div>
@@ -175,7 +176,7 @@ export default function DesktopContactView() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="aditya@icloud.com"
-                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-500"
+                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-slate-900 focus:outline-none focus:border-amber-500"
                     />
                   </div>
                 </div>
@@ -186,14 +187,17 @@ export default function DesktopContactView() {
                     <select
                       value={formData.iphoneModel}
                       onChange={(e) => setFormData({ ...formData, iphoneModel: e.target.value })}
-                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-500 font-medium"
+                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-slate-900 focus:outline-none focus:border-amber-500 font-medium cursor-pointer"
                     >
-                      <option value="iPhone 16 Pro Max">iPhone 16 Pro Max</option>
-                      <option value="iPhone 16 Pro">iPhone 16 Pro</option>
-                      <option value="iPhone 16 / Plus">iPhone 16 / Plus</option>
-                      <option value="iPhone 15 Pro Max">iPhone 15 Pro Max</option>
-                      <option value="iPhone 15 Pro">iPhone 15 Pro</option>
-                      <option value="Other iPhone Model">Other iPhone Model</option>
+                      {IPHONE_MODELS_BY_SERIES.map((group) => (
+                        <optgroup key={group.series} label={group.series} className="font-bold text-slate-900 bg-slate-100">
+                          {group.models.map((model) => (
+                            <option key={model} value={model} className="font-medium text-slate-800 bg-white">
+                              {model}
+                            </option>
+                          ))}
+                        </optgroup>
+                      ))}
                     </select>
                   </div>
                   <div>
@@ -201,7 +205,7 @@ export default function DesktopContactView() {
                     <select
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-500 font-medium"
+                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-slate-900 focus:outline-none focus:border-amber-500 font-medium"
                     >
                       <option value="Product Sizing & Compatibility">Product Sizing & Compatibility</option>
                       <option value="Custom Laser Name Engraving">Custom Laser Name Engraving</option>
@@ -220,7 +224,7 @@ export default function DesktopContactView() {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="How can we assist with your iPhone case setup?"
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-500"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-slate-900 focus:outline-none focus:border-amber-500"
                   />
                 </div>
 
