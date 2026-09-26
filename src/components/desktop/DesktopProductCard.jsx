@@ -78,6 +78,8 @@ export default function DesktopProductCard({ product }) {
           <img
             src={currentImage}
             alt={product.name}
+            loading="lazy"
+            decoding="async"
             className={`w-full h-full ${product.imageFit === 'contain' ? 'object-contain p-1' : 'object-cover'} rounded-lg sm:rounded-xl group-hover:scale-103 transition-all duration-300`}
           />
 

@@ -100,6 +100,8 @@ export default function ProductQuickViewModal() {
               <img
                 src={displayImage}
                 alt={quickViewProduct.name}
+                loading="lazy"
+                decoding="async"
                 className={`w-full h-full ${quickViewProduct.imageFit === 'contain' ? 'object-contain p-2' : 'object-cover'} group-hover:scale-105 transition duration-500`}
               />
               {quickViewProduct.badge && (

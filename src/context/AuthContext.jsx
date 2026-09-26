@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
+import { safeJSONParse, sanitizeText, validatePassword } from '../utils/security';
 
 const AuthContext = createContext();
 
@@ -31,8 +32,7 @@ export const loadAllUsersFromStorage = () => {
   const userMap = new Map();
   let deletedEmails = [];
   try {
-    const rawDeleted = localStorage.getItem('casematrix_deleted_user_emails');
-    if (rawDeleted) deletedEmails = JSON.parse(rawDeleted);
+    deletedEmails = safeJSONParse(localStorage.getItem('casematrix_deleted_user_emails'), []);
   } catch (e) {}
 
   const isDeleted = (email) => {
@@ -53,118 +53,100 @@ export const loadAllUsersFromStorage = () => {
 
   // 3. Load dedicated registered customers list (excluding removed accounts)
   try {
-    const raw = localStorage.getItem('casematrix_registered_customers');
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) {
-        parsed.forEach(u => {
-          if (u && u.email && !isDeleted(u.email)) {
-            const emailKey = u.email.toLowerCase().trim();
-            const existing = userMap.get(emailKey) || {};
-            userMap.set(emailKey, { ...existing, ...u });
-          }
-        });
-      }
+    const parsed = safeJSONParse(localStorage.getItem('casematrix_registered_customers'), []);
+    if (Array.isArray(parsed)) {
+      parsed.forEach(u => {
+        if (u && u.email && !isDeleted(u.email)) {
+          const emailKey = u.email.toLowerCase().trim();
+          const existing = userMap.get(emailKey) || {};
+          userMap.set(emailKey, { ...existing, ...u });
+        }
+      });
     }
   } catch (e) {}
 
   // 4. Load stored users list
   try {
-    const raw = localStorage.getItem('casematrix_users');
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) {
-        parsed.forEach(u => {
-          if (u && u.email && !isDeleted(u.email)) {
-            const emailKey = u.email.toLowerCase().trim();
-            const existing = userMap.get(emailKey) || {};
-            userMap.set(emailKey, { ...existing, ...u });
-          }
-        });
-      }
+    const parsed = safeJSONParse(localStorage.getItem('casematrix_users'), []);
+    if (Array.isArray(parsed)) {
+      parsed.forEach(u => {
+        if (u && u.email && !isDeleted(u.email)) {
+          const emailKey = u.email.toLowerCase().trim();
+          const existing = userMap.get(emailKey) || {};
+          userMap.set(emailKey, { ...existing, ...u });
+        }
+      });
     }
   } catch (e) {}
 
   // 5. Load active customer session (if currently or recently signed in!)
   try {
-    const raw = localStorage.getItem('casematrix_current_user');
-    if (raw) {
-      const u = JSON.parse(raw);
-      if (u && u.email && !isDeleted(u.email)) {
-        const emailKey = u.email.toLowerCase().trim();
-        const existing = userMap.get(emailKey) || {};
-        userMap.set(emailKey, { ...existing, ...u });
-      }
+    const u = safeJSONParse(localStorage.getItem('casematrix_current_user'), null);
+    if (u && u.email && !isDeleted(u.email)) {
+      const emailKey = u.email.toLowerCase().trim();
+      const existing = userMap.get(emailKey) || {};
+      userMap.set(emailKey, { ...existing, ...u });
     }
   } catch (e) {}
 
   // 6. Load last active customer
   try {
-    const raw = localStorage.getItem('casematrix_last_active_customer');
-    if (raw) {
-      const u = JSON.parse(raw);
-      if (u && u.email && !isDeleted(u.email)) {
-        const emailKey = u.email.toLowerCase().trim();
-        const existing = userMap.get(emailKey) || {};
-        userMap.set(emailKey, { ...existing, ...u });
-      }
+    const u = safeJSONParse(localStorage.getItem('casematrix_last_active_customer'), null);
+    if (u && u.email && !isDeleted(u.email)) {
+      const emailKey = u.email.toLowerCase().trim();
+      const existing = userMap.get(emailKey) || {};
+      userMap.set(emailKey, { ...existing, ...u });
     }
   } catch (e) {}
 
   // 7. Load login history entries
   try {
-    const raw = localStorage.getItem('casematrix_customer_logins');
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) {
-        parsed.forEach(s => {
-          if (s && s.email && !isDeleted(s.email)) {
-            const emailKey = s.email.toLowerCase().trim();
-            if (!userMap.has(emailKey)) {
-              userMap.set(emailKey, {
-                id: s.userId || 'usr-' + Date.now(),
-                name: s.name || emailKey.split('@')[0],
-                email: s.email,
-                phone: s.phone || '',
-                role: s.role || 'user',
-                createdAt: s.timestamp || new Date().toISOString(),
-                lastLoginAt: s.timestamp || new Date().toISOString()
-              });
-            }
+    const parsed = safeJSONParse(localStorage.getItem('casematrix_customer_logins'), []);
+    if (Array.isArray(parsed)) {
+      parsed.forEach(s => {
+        if (s && s.email && !isDeleted(s.email)) {
+          const emailKey = s.email.toLowerCase().trim();
+          if (!userMap.has(emailKey)) {
+            userMap.set(emailKey, {
+              id: s.userId || 'usr-' + Date.now(),
+              name: s.name || emailKey.split('@')[0],
+              email: s.email,
+              phone: s.phone || '',
+              role: s.role === 'admin' && s.email?.toLowerCase() === 'casematrix@gmail.com' ? 'admin' : 'user',
+              createdAt: s.timestamp || new Date().toISOString(),
+              lastLoginAt: s.timestamp || new Date().toISOString()
+            });
           }
-        });
-      }
+        }
+      });
     }
   } catch (e) {}
 
   // 8. Load customers from Orders
   try {
-    const raw = localStorage.getItem('aura_iphone_orders');
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) {
-        parsed.forEach(ord => {
-          const cust = ord.customer;
-          if (cust && cust.email && !isDeleted(cust.email)) {
-            const emailKey = cust.email.toLowerCase().trim();
-            if (!userMap.has(emailKey)) {
-              userMap.set(emailKey, {
-                id: 'usr-' + Date.now() + Math.random().toString(36).slice(2, 5),
-                name: cust.name || emailKey.split('@')[0],
-                email: cust.email,
-                phone: cust.phone || '',
-                role: 'user',
-                createdAt: ord.createdAt || new Date().toISOString(),
-                lastLoginAt: ord.createdAt || new Date().toISOString()
-              });
-            }
+    const parsed = safeJSONParse(localStorage.getItem('aura_iphone_orders'), []);
+    if (Array.isArray(parsed)) {
+      parsed.forEach(ord => {
+        const cust = ord.customer;
+        if (cust && cust.email && !isDeleted(cust.email)) {
+          const emailKey = cust.email.toLowerCase().trim();
+          if (!userMap.has(emailKey)) {
+            userMap.set(emailKey, {
+              id: 'usr-' + Date.now() + Math.random().toString(36).slice(2, 5),
+              name: cust.name || emailKey.split('@')[0],
+              email: cust.email,
+              phone: cust.phone || '',
+              role: 'user',
+              createdAt: ord.createdAt || new Date().toISOString(),
+              lastLoginAt: ord.createdAt || new Date().toISOString()
+            });
           }
-        });
-      }
+        }
+      });
     }
   } catch (e) {}
 
-  // Ensure admin credentials always correct
+  // Strict: Ensure admin credentials cannot be overridden
   userMap.set('casematrix@gmail.com', DEFAULT_ADMIN);
 
   const merged = Array.from(userMap.values());
@@ -180,11 +162,18 @@ export function AuthProvider({ children }) {
   // 1. Registered users list in LocalStorage
   const [users, setUsers] = useState(loadAllUsersFromStorage);
 
-  // 2. Active logged-in session
+  // 2. Active logged-in session (with role integrity check)
   const [currentUser, setCurrentUser] = useState(() => {
     try {
-      const storedSession = localStorage.getItem('casematrix_current_user');
-      return storedSession ? JSON.parse(storedSession) : null;
+      const stored = safeJSONParse(localStorage.getItem('casematrix_current_user'), null);
+      if (stored) {
+        // Enforce role integrity: only casematrix@gmail.com can hold admin role
+        if (stored.role === 'admin' && stored.email?.toLowerCase() !== 'casematrix@gmail.com') {
+          stored.role = 'user';
+        }
+        return stored;
+      }
+      return null;
     } catch (e) {
       return null;
     }
@@ -192,27 +181,21 @@ export function AuthProvider({ children }) {
 
   // 3. Customer Logins & Activity Log
   const [customerLogins, setCustomerLogins] = useState(() => {
-    try {
-      const stored = localStorage.getItem('casematrix_customer_logins');
-      return stored ? JSON.parse(stored) : [];
-    } catch (e) {
-      return [];
-    }
+    return safeJSONParse(localStorage.getItem('casematrix_customer_logins'), []);
   });
 
   // 4. Most Recent Active Customer Profile
   const [lastActiveCustomer, setLastActiveCustomer] = useState(() => {
-    try {
-      const saved = localStorage.getItem('casematrix_last_active_customer');
-      return saved ? JSON.parse(saved) : null;
-    } catch (e) {
-      return null;
-    }
+    return safeJSONParse(localStorage.getItem('casematrix_last_active_customer'), null);
   });
 
   // 5. Auth Modal Open / Tab state
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalTab, setAuthModalTab] = useState('login'); // 'login' | 'signup' | 'admin'
+
+  // 6. Failed Login Attempt Rate-Limiter State
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const [lockoutUntil, setLockoutUntil] = useState(null);
 
   // Sync users function to reload from all sources
   const syncUsers = () => {
@@ -227,8 +210,13 @@ export function AuthProvider({ children }) {
     const handleStorageChange = () => {
       syncUsers();
       try {
-        const storedSession = localStorage.getItem('casematrix_current_user');
-        if (storedSession) setCurrentUser(JSON.parse(storedSession));
+        const stored = safeJSONParse(localStorage.getItem('casematrix_current_user'), null);
+        if (stored) {
+          if (stored.role === 'admin' && stored.email?.toLowerCase() !== 'casematrix@gmail.com') {
+            stored.role = 'user';
+          }
+          setCurrentUser(stored);
+        }
       } catch (e) {}
     };
 
@@ -265,8 +253,7 @@ export function AuthProvider({ children }) {
     if (user.role === 'admin' || emailKey === 'casematrix@gmail.com') return;
 
     try {
-      const raw = localStorage.getItem('casematrix_registered_customers');
-      let list = raw ? JSON.parse(raw) : [];
+      let list = safeJSONParse(localStorage.getItem('casematrix_registered_customers'), []);
       if (!Array.isArray(list)) list = [];
       const withoutDup = list.filter(u => u && u.email && u.email.toLowerCase().trim() !== emailKey);
       const updated = [user, ...withoutDup];
@@ -288,7 +275,7 @@ export function AuthProvider({ children }) {
       name: user.name || 'Customer',
       email: user.email,
       phone: user.phone || '',
-      role: user.role || 'user',
+      role: user.role === 'admin' && user.email?.toLowerCase() === 'casematrix@gmail.com' ? 'admin' : 'user',
       timestamp: new Date().toISOString(),
       timeFormatted: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }),
       dateFormatted: new Date().toLocaleDateString('en-IN')
@@ -309,8 +296,17 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // Login handler
+  // Login handler with anti-brute-force rate limiting
   const login = (email, password) => {
+    // Check if currently locked out
+    if (lockoutUntil && Date.now() < lockoutUntil) {
+      const remainingSecs = Math.ceil((lockoutUntil - Date.now()) / 1000);
+      return { 
+        success: false, 
+        message: `Too many failed login attempts. Please wait ${remainingSecs} seconds before retrying.` 
+      };
+    }
+
     const cleanEmail = email?.trim().toLowerCase() || '';
     const normalizedEmail = cleanEmail.includes('@') ? cleanEmail : `${cleanEmail}@gmail.com`;
     const cleanPass = password?.trim() || '';
@@ -331,7 +327,10 @@ export function AuthProvider({ children }) {
           createdAt: '2026-01-01T00:00:00.000Z',
           lastLoginAt: new Date().toISOString()
         };
-        // Re-read storage so all registered customers are strictly preserved!
+        // Reset failed attempts on success
+        setFailedAttempts(0);
+        setLockoutUntil(null);
+
         const allLoaded = loadAllUsersFromStorage();
         const withoutAdmin = allLoaded.filter(u => u.email?.toLowerCase() !== 'casematrix@gmail.com');
         const updatedUsers = [adminUser, ...withoutAdmin];
@@ -344,7 +343,13 @@ export function AuthProvider({ children }) {
         setIsAuthModalOpen(false);
         return { success: true, user: adminUser };
       } else {
-        return { success: false, message: 'Incorrect admin password. (Default is casematrix)' };
+        const newAttempts = failedAttempts + 1;
+        setFailedAttempts(newAttempts);
+        if (newAttempts >= 5) {
+          setLockoutUntil(Date.now() + 30000); // 30 second cooldown
+          return { success: false, message: 'Too many failed attempts. Security lockout active for 30 seconds.' };
+        }
+        return { success: false, message: `Incorrect admin password. (${5 - newAttempts} attempts remaining)` };
       }
     }
 
@@ -356,10 +361,21 @@ export function AuthProvider({ children }) {
     if (matchedUser) {
       // Existing user: check password if one was set
       if (matchedUser.password && matchedUser.password !== cleanPass) {
+        const newAttempts = failedAttempts + 1;
+        setFailedAttempts(newAttempts);
+        if (newAttempts >= 5) {
+          setLockoutUntil(Date.now() + 30000);
+          return { success: false, message: 'Too many failed attempts. Account temporarily locked for 30 seconds.' };
+        }
         return { success: false, message: 'Incorrect password. Please try again.' };
       }
+
+      setFailedAttempts(0);
+      setLockoutUntil(null);
+
       matchedUser = {
         ...matchedUser,
+        role: matchedUser.email?.toLowerCase() === 'casematrix@gmail.com' ? 'admin' : 'user',
         lastLoginAt: new Date().toISOString()
       };
       const updatedUsers = users.map(u => u.id === matchedUser.id ? matchedUser : u);
@@ -375,8 +391,10 @@ export function AuthProvider({ children }) {
       return { success: true, user: matchedUser };
     } else {
       // New user auto-registered on first sign in
+      setFailedAttempts(0);
+      setLockoutUntil(null);
+
       const finalEmail = cleanEmail.includes('@') ? cleanEmail : `${cleanEmail}@gmail.com`;
-      const isAdmin = finalEmail.startsWith('admin@') || finalEmail.includes('casematrix');
       const namePart = cleanEmail.split('@')[0].replace(/[._-]/g, ' ');
       const formattedName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
       
@@ -386,7 +404,7 @@ export function AuthProvider({ children }) {
         email: finalEmail,
         password: cleanPass,
         phone: '',
-        role: isAdmin ? 'admin' : 'user',
+        role: finalEmail === 'casematrix@gmail.com' ? 'admin' : 'user',
         createdAt: new Date().toISOString(),
         lastLoginAt: new Date().toISOString()
       };
@@ -404,7 +422,7 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // Sign Up handler
+  // Sign Up handler with input validation and security checks
   const signup = (userData) => {
     let cleanEmail = userData.email?.trim().toLowerCase() || '';
     if (cleanEmail && !cleanEmail.includes('@')) {
@@ -418,6 +436,11 @@ export function AuthProvider({ children }) {
       return { success: false, message: 'Email address is required' };
     }
 
+    const passCheck = validatePassword(cleanPass);
+    if (!passCheck.valid) {
+      return { success: false, message: passCheck.message };
+    }
+
     // Check if email already exists
     const existing = users.find((u) => u.email?.toLowerCase() === cleanEmail);
     if (existing) {
@@ -426,6 +449,7 @@ export function AuthProvider({ children }) {
         name: cleanName || existing.name,
         phone: cleanPhone || existing.phone,
         password: cleanPass,
+        role: existing.email?.toLowerCase() === 'casematrix@gmail.com' ? 'admin' : 'user',
         lastLoginAt: new Date().toISOString()
       };
       const updatedUsers = users.map(u => u.id === existing.id ? updated : u);
@@ -441,7 +465,8 @@ export function AuthProvider({ children }) {
       return { success: true, user: updated };
     }
 
-    const isAdminEmail = cleanEmail.startsWith('admin@') || cleanEmail === 'casematrix@gmail.com';
+    // Strict: Only exact casematrix@gmail.com can ever be assigned admin role
+    const isExactAdminEmail = cleanEmail === 'casematrix@gmail.com';
 
     const newUser = {
       id: 'usr-' + Date.now(),
@@ -449,7 +474,7 @@ export function AuthProvider({ children }) {
       email: cleanEmail,
       password: cleanPass,
       phone: cleanPhone,
-      role: isAdminEmail ? 'admin' : 'user',
+      role: isExactAdminEmail ? 'admin' : 'user',
       createdAt: new Date().toISOString(),
       lastLoginAt: new Date().toISOString()
     };

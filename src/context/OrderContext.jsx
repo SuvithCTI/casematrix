@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
+import { safeJSONParse, sanitizeText } from '../utils/security';
 
 const OrderContext = createContext();
 
@@ -77,11 +78,11 @@ export const loadOrdersFromStorage = () => {
     const savedCase = localStorage.getItem('casematrix_orders');
 
     if (savedAura !== null) {
-      const parsed = JSON.parse(savedAura);
+      const parsed = safeJSONParse(savedAura, null);
       if (Array.isArray(parsed)) return parsed;
     }
     if (savedCase !== null) {
-      const parsed = JSON.parse(savedCase);
+      const parsed = safeJSONParse(savedCase, null);
       if (Array.isArray(parsed)) return parsed;
     }
   } catch (e) {}
@@ -102,9 +103,9 @@ export function OrderProvider({ children }) {
   // 2. Corporate Enquiries with LocalStorage Persistence
   const [enquiries, setEnquiries] = useState(() => {
     try {
-      const saved = localStorage.getItem('casematrix_enquiries');
-      if (saved) {
-        return JSON.parse(saved);
+      const saved = safeJSONParse(localStorage.getItem('casematrix_enquiries'), null);
+      if (saved && Array.isArray(saved)) {
+        return saved;
       }
       localStorage.setItem('casematrix_enquiries', JSON.stringify(INITIAL_DEMO_ENQUIRIES));
       return INITIAL_DEMO_ENQUIRIES;
@@ -172,18 +173,23 @@ export function OrderProvider({ children }) {
       orderId,
       createdAt: new Date().toISOString(),
       customer: {
-        name: orderData.name || 'Aditya Verma',
-        email: orderData.email || 'user@casematrix.in',
-        phone: orderData.phone || '+91 98765 43210',
-        address: orderData.address || 'Address provided',
-        city: orderData.city || 'Chennai',
-        postalCode: orderData.postalCode || '600001',
-        state: orderData.state || 'Tamil Nadu',
-        country: orderData.country || 'India',
-        notes: orderData.notes || ''
+        name: sanitizeText(orderData.name || 'Aditya Verma', 80),
+        email: (orderData.email || 'user@casematrix.in').trim().toLowerCase(),
+        phone: sanitizeText(orderData.phone || '+91 98765 43210', 20),
+        address: sanitizeText(orderData.address || 'Address provided', 200),
+        city: sanitizeText(orderData.city || 'Chennai', 60),
+        postalCode: sanitizeText(orderData.postalCode || '600001', 10),
+        state: sanitizeText(orderData.state || 'Tamil Nadu', 50),
+        country: 'India',
+        notes: sanitizeText(orderData.notes || '', 300)
       },
-      paymentMethod: orderData.paymentMethod || 'Cash On Delivery',
-      items: Array.isArray(cartItems) && cartItems.length > 0 ? cartItems : [
+      paymentMethod: sanitizeText(orderData.paymentMethod || 'Cash On Delivery', 50),
+      items: Array.isArray(cartItems) && cartItems.length > 0 ? cartItems.map(item => ({
+        ...item,
+        name: sanitizeText(item.name || 'iPhone Case', 100),
+        model: sanitizeText(item.model || 'iPhone 16 Pro Max', 50),
+        engraving: sanitizeText(item.engraving || '', 50)
+      })) : [
         {
           name: 'AURA™ Hello Kitty Pink Camera-Shield Acrylic Case',
           model: 'iPhone 16 Pro Max',
@@ -194,11 +200,11 @@ export function OrderProvider({ children }) {
         }
       ],
       pricing: {
-        subtotal: pricing?.subtotal || 1999,
-        discount: pricing?.discountAmount || 0,
-        shipping: pricing?.shippingFee || 0,
-        total: pricing?.total || 1999,
-        promoCode: pricing?.appliedPromoName || ''
+        subtotal: Number(pricing?.subtotal) || 1999,
+        discount: Number(pricing?.discountAmount) || 0,
+        shipping: Number(pricing?.shippingFee) || 0,
+        total: Number(pricing?.total) || 1999,
+        promoCode: sanitizeText(pricing?.appliedPromoName || '', 20)
       },
       status: 'Confirmed'
     };
@@ -281,7 +287,14 @@ export function OrderProvider({ children }) {
       id: 'enq-' + Date.now(),
       createdAt: new Date().toISOString(),
       status: 'New',
-      ...enquiryData
+      name: sanitizeText(enquiryData.name || '', 80),
+      company: sanitizeText(enquiryData.company || '', 100),
+      email: (enquiryData.email || '').trim().toLowerCase(),
+      phone: sanitizeText(enquiryData.phone || '', 20),
+      enquiryType: sanitizeText(enquiryData.enquiryType || 'General', 80),
+      targetModel: sanitizeText(enquiryData.targetModel || 'iPhone 16 Pro Max', 50),
+      estimatedQuantity: sanitizeText(enquiryData.estimatedQuantity || '', 50),
+      message: sanitizeText(enquiryData.message || '', 500)
     };
     setEnquiries((prev) => {
       const updated = [newEnquiry, ...prev];

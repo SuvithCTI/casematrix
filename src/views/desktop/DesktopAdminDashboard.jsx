@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { 
   ShieldCheck, 
   Package, 
@@ -133,8 +133,8 @@ export default function DesktopAdminDashboard({ setActiveTab, onNavigateHome }) 
     window.addEventListener('storage', handleLiveSync);
     window.addEventListener('focus', handleLiveSync);
 
-    // 2-second heartbeat to guarantee 100% live updates
-    const interval = setInterval(handleLiveSync, 2000);
+    // 5-second background heartbeat as lightweight fallback for live updates
+    const interval = setInterval(handleLiveSync, 5000);
 
     return () => {
       window.removeEventListener('casematrix_orders_updated', handleLiveSync);
@@ -159,6 +159,16 @@ export default function DesktopAdminDashboard({ setActiveTab, onNavigateHome }) 
   };
 
   const handleVisitStore = () => {
+    if (setActiveTab) {
+      setActiveTab('home');
+    } else if (onNavigateHome) {
+      onNavigateHome();
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleAdminLogout = () => {
+    logout();
     if (setActiveTab) {
       setActiveTab('home');
     } else if (onNavigateHome) {
@@ -426,51 +436,55 @@ export default function DesktopAdminDashboard({ setActiveTab, onNavigateHome }) 
     );
   }
 
-  // Calculate Metrics
-  const totalRevenue = orders.reduce((sum, ord) => sum + (ord.pricing?.total || 0), 0);
-  const avgOrderValue = orders.length > 0 ? Math.round(totalRevenue / orders.length) : 0;
-  const inStockCount = products.filter((p) => p.inStock !== false).length;
-  const outOfStockCount = products.length - inStockCount;
-  const pendingOrdersCount = orders.filter((o) => {
+  // Calculate Metrics (Memoized for high performance)
+  const totalRevenue = useMemo(() => orders.reduce((sum, ord) => sum + (ord.pricing?.total || 0), 0), [orders]);
+  const avgOrderValue = useMemo(() => orders.length > 0 ? Math.round(totalRevenue / orders.length) : 0, [orders, totalRevenue]);
+  const inStockCount = useMemo(() => products.filter((p) => p.inStock !== false).length, [products]);
+  const outOfStockCount = useMemo(() => products.length - inStockCount, [products, inStockCount]);
+  const pendingOrdersCount = useMemo(() => orders.filter((o) => {
     const s = o.status?.toLowerCase();
     return s === 'pending' || s === 'processing' || s === 'confirmed';
-  }).length;
-  const newEnquiriesCount = enquiries.filter((e) => e.status?.toLowerCase() === 'new' || !e.status).length;
+  }).length, [orders]);
+  const newEnquiriesCount = useMemo(() => enquiries.filter((e) => e.status?.toLowerCase() === 'new' || !e.status).length, [enquiries]);
 
-  // Filtered Orders - Safe & Robust Search & Filter
-  const filteredOrders = orders.filter((ord) => {
-    if (!ord) return false;
-    const cleanSearch = (orderSearch || '').toLowerCase().trim();
-    
-    const matchSearch = !cleanSearch ||
-      (ord.orderId && ord.orderId.toLowerCase().includes(cleanSearch)) ||
-      (ord.customer?.name && ord.customer.name.toLowerCase().includes(cleanSearch)) ||
-      (ord.customer?.email && ord.customer.email.toLowerCase().includes(cleanSearch)) ||
-      (ord.customer?.phone && ord.customer.phone.toLowerCase().includes(cleanSearch)) ||
-      (ord.items && Array.isArray(ord.items) && ord.items.some(i => i && i.name && i.name.toLowerCase().includes(cleanSearch)));
+  // Filtered Orders - Safe, Robust & Memoized Search & Filter
+  const filteredOrders = useMemo(() => {
+    return orders.filter((ord) => {
+      if (!ord) return false;
+      const cleanSearch = (orderSearch || '').toLowerCase().trim();
+      
+      const matchSearch = !cleanSearch ||
+        (ord.orderId && ord.orderId.toLowerCase().includes(cleanSearch)) ||
+        (ord.customer?.name && ord.customer.name.toLowerCase().includes(cleanSearch)) ||
+        (ord.customer?.email && ord.customer.email.toLowerCase().includes(cleanSearch)) ||
+        (ord.customer?.phone && ord.customer.phone.toLowerCase().includes(cleanSearch)) ||
+        (ord.items && Array.isArray(ord.items) && ord.items.some(i => i && i.name && i.name.toLowerCase().includes(cleanSearch)));
 
-    const ordStatus = (ord.status || 'Confirmed').toLowerCase();
-    const filterStatus = (selectedOrderStatusFilter || 'all').toLowerCase();
-    const matchStatus = filterStatus === 'all' || ordStatus === filterStatus;
+      const ordStatus = (ord.status || 'Confirmed').toLowerCase();
+      const filterStatus = (selectedOrderStatusFilter || 'all').toLowerCase();
+      const matchStatus = filterStatus === 'all' || ordStatus === filterStatus;
 
-    return Boolean(matchSearch && matchStatus);
-  });
+      return Boolean(matchSearch && matchStatus);
+    });
+  }, [orders, orderSearch, selectedOrderStatusFilter]);
 
-  // Filtered Products
-  const filteredAdminProducts = products.filter((p) => {
-    const matchSearch = 
-      p.name.toLowerCase().includes(productSearch.toLowerCase()) ||
-      p.targetModel?.toLowerCase().includes(productSearch.toLowerCase()) ||
-      p.badge?.toLowerCase().includes(productSearch.toLowerCase());
+  // Filtered Products (Memoized)
+  const filteredAdminProducts = useMemo(() => {
+    return products.filter((p) => {
+      const matchSearch = 
+        p.name.toLowerCase().includes(productSearch.toLowerCase()) ||
+        p.targetModel?.toLowerCase().includes(productSearch.toLowerCase()) ||
+        p.badge?.toLowerCase().includes(productSearch.toLowerCase());
 
-    const matchSeries = 
-      selectedProductSeriesFilter === 'all' ||
-      (selectedProductSeriesFilter === 'inStock' && p.inStock !== false) ||
-      (selectedProductSeriesFilter === 'outOfStock' && p.inStock === false) ||
-      p.targetModel?.includes(selectedProductSeriesFilter);
+      const matchSeries = 
+        selectedProductSeriesFilter === 'all' ||
+        (selectedProductSeriesFilter === 'inStock' && p.inStock !== false) ||
+        (selectedProductSeriesFilter === 'outOfStock' && p.inStock === false) ||
+        p.targetModel?.includes(selectedProductSeriesFilter);
 
-    return matchSearch && matchSeries;
-  });
+      return matchSearch && matchSeries;
+    });
+  }, [products, productSearch, selectedProductSeriesFilter]);
 
   const handleProductFormSubmit = (e) => {
     e.preventDefault();
@@ -632,13 +646,13 @@ export default function DesktopAdminDashboard({ setActiveTab, onNavigateHome }) 
             <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-amber-400 transition" />
           </button>
 
-          {/* User Account Card */}
-          <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
-            <div className="flex items-center gap-2.5 overflow-hidden">
+          {/* User Account Card with Enhanced Sign Out */}
+          <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center justify-between gap-2 shadow-2xs">
+            <div className="flex items-center gap-2.5 overflow-hidden min-w-0">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 font-black text-xs flex items-center justify-center shrink-0 shadow-xs">
                 {currentUser?.name?.charAt(0)?.toUpperCase() || 'A'}
               </div>
-              <div className="overflow-hidden">
+              <div className="overflow-hidden min-w-0">
                 <p className="text-xs font-bold text-slate-900 truncate">{currentUser?.name || 'Administrator'}</p>
                 <p className="text-[10px] text-slate-500 truncate">{currentUser?.email || 'casematrix@gmail.com'}</p>
               </div>
@@ -646,11 +660,12 @@ export default function DesktopAdminDashboard({ setActiveTab, onNavigateHome }) 
 
             <button
               type="button"
-              onClick={logout}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition cursor-pointer"
-              title="Sign Out"
+              onClick={handleAdminLogout}
+              className="px-2.5 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-200/90 hover:border-rose-600 transition-all flex items-center gap-1 text-xs font-bold shadow-2xs hover:shadow-xs active:scale-95 cursor-pointer shrink-0"
+              title="Sign Out & Return to Storefront"
             >
-              <LogOut className="w-4 h-4" />
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Logout</span>
             </button>
           </div>
 
