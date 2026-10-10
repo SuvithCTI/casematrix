@@ -80,8 +80,17 @@ export default function DesktopProductCard({ product, className = '' }) {
             alt={product.name}
             loading="lazy"
             decoding="async"
-            className={`w-full h-full ${product.imageFit === 'contain' ? 'object-contain p-1' : 'object-cover'} rounded-lg sm:rounded-xl group-hover:scale-103 transition-all duration-300`}
+            className={`w-full h-full ${product.imageFit === 'contain' ? 'object-contain p-1' : 'object-cover'} rounded-lg sm:rounded-xl group-hover:scale-103 transition-all duration-300 ${product.inStock === false ? 'opacity-65 grayscale-30' : ''}`}
           />
+
+          {/* Out of Stock Overlay Badge */}
+          {product.inStock === false && (
+            <div className="absolute top-2 right-2 z-10">
+              <span className="px-2 py-0.5 rounded-full bg-rose-600 text-white font-black text-[9px] sm:text-[10px] uppercase tracking-wider shadow-md">
+                Out of Stock
+              </span>
+            </div>
+          )}
 
           {/* Quick View Hover Trigger */}
           <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity hidden sm:flex items-center justify-center gap-2">
@@ -93,7 +102,7 @@ export default function DesktopProductCard({ product, className = '' }) {
             >
               <Eye className="w-3.5 h-3.5" /> Quick View
             </button>
-            {product.isCustomizable && (
+            {product.isCustomizable && product.inStock !== false && (
               <button
                 type="button"
                 onClick={handleOpenCustomizer}
@@ -160,13 +169,23 @@ export default function DesktopProductCard({ product, className = '' }) {
             >
               <MessageSquare className="w-3 h-3 sm:w-4 sm:h-4" />
             </button>
-            <button
-              type="button"
-              onClick={handleQuickAdd}
-              className="px-2 sm:px-3.5 py-1 sm:py-2 rounded-lg sm:rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-[9.5px] sm:text-xs font-bold transition flex items-center gap-1 shadow-xs active:scale-95"
-            >
-              <ShoppingBag className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-amber-400" /> Add
-            </button>
+            {product.inStock === false ? (
+              <button
+                type="button"
+                disabled
+                className="px-2 sm:px-3 py-1 sm:py-2 rounded-lg sm:rounded-xl bg-slate-100 text-slate-400 text-[9px] sm:text-xs font-bold cursor-not-allowed border border-slate-200"
+              >
+                Sold Out
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={handleQuickAdd}
+                className="px-2 sm:px-3.5 py-1 sm:py-2 rounded-lg sm:rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-[9.5px] sm:text-xs font-bold transition flex items-center gap-1 shadow-xs active:scale-95 cursor-pointer"
+              >
+                <ShoppingBag className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-amber-400" /> Add
+              </button>
+            )}
           </div>
         </div>
       </div>

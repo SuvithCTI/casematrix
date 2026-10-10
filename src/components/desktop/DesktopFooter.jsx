@@ -181,9 +181,12 @@ export default function DesktopFooter({ setActiveTab, onOpenLegal }) {
           <button type="button" onClick={() => onOpenLegal('terms')} className="text-slate-400 hover:text-amber-400 transition cursor-pointer">
             Terms & Conditions
           </button>
-          <span className="text-white/20">•</span>
           <button type="button" onClick={() => onOpenLegal('privacy')} className="text-slate-400 hover:text-amber-400 transition cursor-pointer">
             Privacy Policy
+          </button>
+          <span className="text-white/20">•</span>
+          <button type="button" onClick={() => handleNav('admin')} className="text-amber-500/80 hover:text-amber-400 transition cursor-pointer font-bold flex items-center gap-1">
+            <span>Admin Portal</span>
           </button>
           <span className="text-white/20">•</span>
           <button

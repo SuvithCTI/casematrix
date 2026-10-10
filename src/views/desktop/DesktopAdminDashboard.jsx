@@ -1327,11 +1327,11 @@ export default function DesktopAdminDashboard({ setActiveTab, onNavigateHome }) 
                     >
                       <div className="space-y-2 sm:space-y-3">
                         {/* Thumbnail, Badges & Image Counter */}
-                        <div className="relative aspect-video rounded-lg sm:rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
+                        <div className="relative aspect-[4/3.8] sm:aspect-[4/3.2] rounded-lg sm:rounded-xl overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center p-1 sm:p-2">
                           <img
                             src={prod.image || productImages[0]}
                             alt={prod.name}
-                            className="w-full h-full object-cover"
+                            className={`w-full h-full ${prod.imageFit === 'contain' ? 'object-contain' : 'object-cover'} rounded-md`}
                           />
                           <div className="absolute top-1 sm:top-2 left-1 sm:left-2 flex items-center gap-1 sm:gap-1.5 flex-wrap">
                             <span className="px-1.5 sm:px-2 py-0.5 rounded sm:rounded-md bg-slate-950/85 text-amber-300 font-black text-[8px] sm:text-[10px] uppercase truncate max-w-[90px] sm:max-w-none">

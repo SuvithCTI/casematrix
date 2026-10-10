@@ -215,17 +215,27 @@ export default function ProductQuickViewModal() {
             {/* CTA Buttons */}
             <div className="space-y-2 pt-2">
               <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={handleAddToCart}
-                  className="py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition active:scale-95"
-                >
-                  <ShoppingBag className="w-4 h-4 text-amber-400" /> Add to Bag
-                </button>
+                {quickViewProduct.inStock === false ? (
+                  <button
+                    type="button"
+                    disabled
+                    className="py-3 px-4 rounded-xl bg-slate-100 text-slate-400 font-bold text-xs flex items-center justify-center gap-2 cursor-not-allowed border border-slate-200"
+                  >
+                    Sold Out
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={handleAddToCart}
+                    className="py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition active:scale-95 cursor-pointer"
+                  >
+                    <ShoppingBag className="w-4 h-4 text-amber-400" /> Add to Bag
+                  </button>
+                )}
                 <button
                   type="button"
                   onClick={handleWhatsApp}
-                  className="py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition active:scale-95"
+                  className="py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition active:scale-95 cursor-pointer"
                 >
                   <MessageSquare className="w-4 h-4" /> WhatsApp Order
                 </button>
