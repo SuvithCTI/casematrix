@@ -10,7 +10,7 @@ export default function EnquiryModal() {
     company: '',
     email: '',
     phone: '',
-    enquiryType: 'Corporate / Bulk iPhone Cases (10+ Units)',
+    enquiryType: 'Corporate / Bulk Mobiles & Accessories (10+ Units)',
     targetModel: 'iPhone 16 Pro Max',
     estimatedQuantity: '25-50 Units (25% Off)',
     message: ''
@@ -28,8 +28,8 @@ export default function EnquiryModal() {
   };
 
   const handleWhatsAppEnquiry = () => {
-    const supportPhone = '919384694189';
-    const text = `👋 Hello Case Matrix! Bulk iPhone Enquiry from ${formData.name || 'Client'}:\n\n• Type: ${formData.enquiryType}\n• Model: ${formData.targetModel}\n• Quantity: ${formData.estimatedQuantity}\n• Email/Phone: ${formData.email || ''} / ${formData.phone || ''}\n• Requirements: ${formData.message || 'Need quote for custom laser branding'}`;
+    const supportPhone = '919876543210';
+    const text = `👋 Hello Case Matrix! Bulk Enquiry for Mobiles & Accessories from ${formData.name || 'Client'}:\n\n• Type: ${formData.enquiryType}\n• Model / Category: ${formData.targetModel}\n• Quantity: ${formData.estimatedQuantity}\n• Email/Phone: ${formData.email || ''} / ${formData.phone || ''}\n• Requirements: ${formData.message || 'Need quote for bulk shipment'}`;
     window.open(`https://wa.me/${supportPhone}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -43,8 +43,8 @@ export default function EnquiryModal() {
               <Building className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-900">iPhone Bulk & Custom Order Quote</h3>
-              <p className="text-xs text-slate-500">Custom logo laser engraving & GST invoice in India</p>
+              <h3 className="text-base font-bold text-slate-900">Bulk Mobiles & Accessories Order Quote</h3>
+              <p className="text-xs text-slate-500">Corporate bulk pricing & official GST invoice in India</p>
             </div>
           </div>
           <button
@@ -124,7 +124,7 @@ export default function EnquiryModal() {
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  placeholder="+91 93846 94189"
+                  placeholder="+91 98765 43210"
                   className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white"
                 />
               </div>

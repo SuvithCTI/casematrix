@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ShoppingBag, Menu, X, Smartphone, Sparkles, Home, ShieldCheck, PhoneCall, MessageSquare, User, LogIn, LogOut, LayoutDashboard, ChevronDown, Package } from 'lucide-react';
+import { ShoppingBag, Menu, X, Smartphone, Sparkles, Home, ShieldCheck, PhoneCall, MessageSquare, User, LogOut, LayoutDashboard, ChevronDown, Package } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 import { useOrder } from '../../context/OrderContext';
@@ -264,16 +264,19 @@ export default function DesktopNavbar({ activeTab, setActiveTab }) {
                 </div>
               </div>
             ) : (
-              <div className="flex items-center justify-between w-full">
-                <span className="text-xs text-slate-300">Welcome to Case Matrix</span>
-                <div className="flex items-center gap-2">
+              <div className="flex items-center justify-between gap-2.5 w-full">
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs font-bold text-white truncate">Case Matrix</p>
+                  <p className="text-[10px] text-amber-400 font-semibold truncate">Mobiles & Accessories</p>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
                   <button
                     type="button"
                     onClick={() => {
                       handleTabSelect('signin');
                       setMobileMenuOpen(false);
                     }}
-                    className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/15"
+                    className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/15 whitespace-nowrap shrink-0 active:scale-95 transition"
                   >
                     Sign In
                   </button>
@@ -283,7 +286,7 @@ export default function DesktopNavbar({ activeTab, setActiveTab }) {
                       handleTabSelect('admin-login');
                       setMobileMenuOpen(false);
                     }}
-                    className="px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 font-black text-xs"
+                    className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs whitespace-nowrap shrink-0 active:scale-95 transition shadow-sm"
                   >
                     Admin
                   </button>
@@ -368,7 +371,7 @@ export default function DesktopNavbar({ activeTab, setActiveTab }) {
               <Sparkles className="w-3 h-3 text-amber-400" /> 100% Genuine Titanium
             </span>
             <a
-              href="https://wa.me/919384694189?text=Hi%20Case%20Matrix!%20Need%20quick%20support"
+              href="https://wa.me/919876543210?text=Hi%20Case%20Matrix!%20Need%20quick%20support"
               target="_blank"
               rel="noreferrer"
               className="text-emerald-400 hover:text-emerald-300 font-bold flex items-center gap-1"
@@ -381,4 +384,3 @@ export default function DesktopNavbar({ activeTab, setActiveTab }) {
     </header>
   );
 }
-

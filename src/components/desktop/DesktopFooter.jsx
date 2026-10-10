@@ -6,7 +6,7 @@ import BrandLogo from '../common/BrandLogo';
 
 export default function DesktopFooter({ setActiveTab, onOpenLegal }) {
   const { setIsEnquiryModalOpen } = useOrder();
-  const { setSelectedSeries, setSelectedModel } = useProduct();
+  const { setSelectedCategory, setSelectedSeries, setSelectedModel } = useProduct();
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -17,8 +17,9 @@ export default function DesktopFooter({ setActiveTab, onOpenLegal }) {
     scrollToTop();
   };
 
-  const handleSeriesFilter = (seriesName) => {
-    setSelectedSeries(seriesName);
+  const handleCategoryFilter = (catId) => {
+    setSelectedCategory(catId);
+    setSelectedSeries('all');
     setSelectedModel('all');
     setActiveTab('products');
     scrollToTop();
@@ -40,7 +41,7 @@ export default function DesktopFooter({ setActiveTab, onOpenLegal }) {
             </button>
 
             <p className="text-xs text-slate-400 leading-relaxed max-w-md">
-              Crafting aerospace-grade titanium cases, 15W Qi2 MagSafe wireless accessories, and precision sapphire lens armor designed exclusively for the Apple iPhone ecosystem across India.
+              Your trusted destination for flagship 5G smartphones, aerospace-grade titanium armor cases, high-capacity fast charging banks, MagSafe desktop docks, and precision audio EarPods across India.
             </p>
 
             {/* Official Store Address & Phone Info */}
@@ -51,8 +52,8 @@ export default function DesktopFooter({ setActiveTab, onOpenLegal }) {
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                <a href="tel:+919384694189" className="hover:text-amber-400 font-bold text-white transition">
-                  +91 93846 94189
+                <a href="tel:+919876543210" className="hover:text-amber-400 font-bold text-white transition">
+                  +91 98765 43210
                 </a>
               </div>
             </div>
@@ -67,7 +68,7 @@ export default function DesktopFooter({ setActiveTab, onOpenLegal }) {
                 Corporate Quote
               </button>
               <a
-                href="https://wa.me/919384694189?text=Hi%20Case%20Matrix!%20Need%20direct%20order%20assistance"
+                href="https://wa.me/919876543210?text=Hi%20Case%20Matrix!%20Need%20direct%20order%20assistance"
                 target="_blank"
                 rel="noreferrer"
                 className="w-full sm:w-auto px-3.5 py-2.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-600 text-emerald-400 hover:text-white border border-emerald-500/30 text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-sm text-center active:scale-95"
@@ -93,7 +94,7 @@ export default function DesktopFooter({ setActiveTab, onOpenLegal }) {
                 </li>
                 <li>
                   <button onClick={() => handleNav('products')} className="hover:text-amber-400 transition text-slate-400 text-left cursor-pointer">
-                    All iPhone Cases
+                    All Mobiles & Accessories
                   </button>
                 </li>
                 <li>
@@ -106,39 +107,38 @@ export default function DesktopFooter({ setActiveTab, onOpenLegal }) {
                     Contact & Store
                   </button>
                 </li>
-                <li>
-                  <button onClick={() => handleNav('admin')} className="hover:text-amber-400 transition text-amber-500/80 font-bold text-left cursor-pointer flex items-center gap-1">
-                    <span>Admin Portal</span>
-                    <span className="text-[9px] px-1.5 py-0.2 bg-amber-500/20 text-amber-400 rounded">Secure</span>
-                  </button>
-                </li>
               </ul>
             </div>
 
-            {/* Column 2: Supported Models */}
+            {/* Column 2: Collections */}
             <div className="space-y-3">
               <h5 className="font-extrabold text-white uppercase text-[11px] sm:text-xs tracking-wider flex items-center gap-1.5">
-                <Smartphone className="w-3.5 h-3.5 text-amber-400 shrink-0" /> Models
+                <Smartphone className="w-3.5 h-3.5 text-amber-400 shrink-0" /> Collections
               </h5>
               <ul className="space-y-2 text-xs font-medium">
                 <li>
-                  <button onClick={() => handleSeriesFilter('iPhone 16 Series')} className="hover:text-amber-400 transition text-slate-400 text-left cursor-pointer">
-                    iPhone 16 Series
+                  <button onClick={() => handleCategoryFilter('phones')} className="hover:text-amber-400 transition text-slate-400 text-left cursor-pointer">
+                    Mobile Phones
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleSeriesFilter('iPhone 15 Series')} className="hover:text-amber-400 transition text-slate-400 text-left cursor-pointer">
-                    iPhone 15 Series
+                  <button onClick={() => handleCategoryFilter('cases')} className="hover:text-amber-400 transition text-slate-400 text-left cursor-pointer">
+                    Cases & Covers
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleSeriesFilter('iPhone 14 Series')} className="hover:text-amber-400 transition text-slate-400 text-left cursor-pointer">
-                    iPhone 14 Series
+                  <button onClick={() => handleCategoryFilter('powerbanks')} className="hover:text-amber-400 transition text-slate-400 text-left cursor-pointer">
+                    Power Banks
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleSeriesFilter('iPhone 13 Series')} className="hover:text-amber-400 transition text-slate-400 text-left cursor-pointer">
-                    iPhone 13 Series
+                  <button onClick={() => handleCategoryFilter('chargers')} className="hover:text-amber-400 transition text-slate-400 text-left cursor-pointer">
+                    Fast Chargers
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleCategoryFilter('earpods')} className="hover:text-amber-400 transition text-slate-400 text-left cursor-pointer">
+                    EarPods & Audio
                   </button>
                 </li>
               </ul>

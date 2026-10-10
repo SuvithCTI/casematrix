@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
 import { MessageSquare, Mail, Phone, MapPin, Send, CheckCircle2, HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { useOrder } from '../../context/OrderContext';
-import { IPHONE_MODELS_BY_SERIES } from '../../data/categories';
+
+const INQUIRY_SUBJECTS = [
+  'Product Sizing & Device Compatibility',
+  'Smartphone Availability & Official Pricing',
+  'Power Bank & Fast Charger Specifications',
+  'EarPods & Audio Warranty Details',
+  'Order Status & Pan-India Tracking',
+  'Corporate & B2B Bulk Quotations',
+  'Warranty & Replacement Claims',
+  'General Concierge Assistance'
+];
 
 export default function DesktopContactView() {
   const { triggerConfetti, setIsEnquiryModalOpen } = useOrder();
@@ -12,8 +22,8 @@ export default function DesktopContactView() {
     name: '',
     email: '',
     phone: '',
-    iphoneModel: 'iPhone 16 Pro Max',
-    subject: 'General Question',
+    deviceModel: '',
+    subject: 'Product Sizing & Device Compatibility',
     message: '',
   });
 
@@ -25,26 +35,30 @@ export default function DesktopContactView() {
 
   const handleWhatsAppChat = () => {
     const supportPhone = '919384694189';
-    const text = `Hi Case Matrix Support! I am ${formData.name || 'a customer'} inquiring about ${formData.subject} for ${formData.iphoneModel}.`;
+    const text = `Hi Case Matrix Support! I am ${formData.name || 'a customer'} inquiring about ${formData.subject} regarding ${formData.deviceModel || 'mobiles & accessories'}.`;
     window.open(`https://wa.me/${supportPhone}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
   const faqs = [
     {
+      q: 'Are your smartphones genuine with official brand warranty?',
+      a: 'Yes, 100%! All flagship smartphones (Apple, Samsung, Google, OnePlus) are brand-new, factory-sealed Indian retail units backed by official 1-Year manufacturer warranty valid at authorized service centers pan-India.'
+    },
+    {
       q: 'Are your cases 100% compatible with iPhone 16 Camera Control Button?',
       a: 'Yes! All of our iPhone 16 series cases feature a sapphire-conductive capacitive cutout or precision tactile mechanical bridge that guarantees full swipe and light-press sensitivity on the new Camera Control button.'
     },
     {
-      q: 'Will the Lumina Clear case turn yellow in Indian weather?',
-      a: 'No. We use German Bayer anti-UV polymer molecules that resist discoloration from tropical heat, humidity, skin oils, and sweat. We back this with our 24-Month Zero-Yellowing Replacement Guarantee.'
+      q: 'What power banks and fast chargers do you recommend for daily travel?',
+      a: 'For heavy travel, our UGREEN 20,000mAh bank (22.5W dual USB-A + Type-C) with LED percentage display charges an iPhone 4+ times. For bedside or desk setups, our Portronics 15W MagSafe 2-in-1 dock provides magnetic fast charging.'
     },
     {
       q: 'How fast is delivery across India and is Cash on Delivery available?',
       a: 'Orders are dispatched within 24 hours via Bluedart / Delhivery Express. Delivery takes 2-4 business days across all major Indian cities. We support UPI, Cards, and Cash on Delivery (COD).'
     },
     {
-      q: 'How does WhatsApp ordering work in India?',
-      a: 'You can build your cart on our website and click "Order on WhatsApp" or message our concierge directly. We will confirm your iPhone model, delivery address, and provide instant UPI QR code payment confirmation.'
+      q: 'How does WhatsApp ordering work with Instant UPI?',
+      a: 'You can browse products on our website and click "Chat on WhatsApp" or message our concierge directly (+91 93846 94189). We confirm your device model and address, then provide instant UPI QR code payment confirmation in seconds.'
     }
   ];
 
@@ -92,7 +106,7 @@ export default function DesktopContactView() {
               onClick={handleWhatsAppChat}
               className="w-full py-3.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs flex items-center justify-center gap-2 shadow-lg transition"
             >
-                <MessageSquare className="w-4 h-4" /> Open WhatsApp (+91 93846 94189)
+                <MessageSquare className="w-4 h-4" /> Open WhatsApp (+91 98765 43210)
             </button>
           </div>
 
@@ -114,7 +128,7 @@ export default function DesktopContactView() {
               </div>
               <div>
                 <p className="text-slate-600 uppercase font-bold text-[9px] sm:text-[10px]">Helpline</p>
-                <p className="font-extrabold text-slate-900 text-[11px] sm:text-xs">+91 93846 94189</p>
+                <p className="font-extrabold text-slate-900 text-[11px] sm:text-xs">+91 98765 43210</p>
               </div>
             </div>
 
@@ -183,35 +197,27 @@ export default function DesktopContactView() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-xs font-bold text-slate-700 block mb-1.5">Your iPhone Model</label>
-                    <select
-                      value={formData.iphoneModel}
-                      onChange={(e) => setFormData({ ...formData, iphoneModel: e.target.value })}
-                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-slate-900 focus:outline-none focus:border-amber-500 font-medium cursor-pointer"
-                    >
-                      {IPHONE_MODELS_BY_SERIES.map((group) => (
-                        <optgroup key={group.series} label={group.series} className="font-bold text-slate-900 bg-slate-100">
-                          {group.models.map((model) => (
-                            <option key={model} value={model} className="font-medium text-slate-800 bg-white">
-                              {model}
-                            </option>
-                          ))}
-                        </optgroup>
-                      ))}
-                    </select>
+                    <label className="text-xs font-bold text-slate-700 block mb-1.5">Phone Model / Product</label>
+                    <input
+                      type="text"
+                      value={formData.deviceModel}
+                      onChange={(e) => setFormData({ ...formData, deviceModel: e.target.value })}
+                      placeholder="e.g. iPhone 16 Pro Max, Samsung S24 Ultra, Power Bank"
+                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-slate-900 focus:outline-none focus:border-amber-500"
+                    />
                   </div>
                   <div>
                     <label className="text-xs font-bold text-slate-700 block mb-1.5">Subject</label>
                     <select
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-slate-900 focus:outline-none focus:border-amber-500 font-medium"
+                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-slate-900 focus:outline-none focus:border-amber-500 font-medium cursor-pointer"
                     >
-                      <option value="Product Sizing & Compatibility">Product Sizing & Compatibility</option>
-                      <option value="Custom Laser Name Engraving">Custom Laser Name Engraving</option>
-                      <option value="Order & Tracking Status">Order & Tracking Status</option>
-                      <option value="Warranty & Replacement Claim">Warranty & Replacement Claim</option>
-                      <option value="Corporate / Bulk Quote">Corporate / Bulk Quote</option>
+                      {INQUIRY_SUBJECTS.map((subj) => (
+                        <option key={subj} value={subj} className="font-medium text-slate-800">
+                          {subj}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -223,7 +229,7 @@ export default function DesktopContactView() {
                     rows={4}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="How can we assist with your iPhone case setup?"
+                    placeholder="How can we assist you with our flagship mobiles, cases, power banks, chargers, or audio gear?"
                     className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-slate-900 focus:outline-none focus:border-amber-500"
                   />
                 </div>

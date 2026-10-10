@@ -2,47 +2,32 @@ import React, { useState, useMemo } from 'react';
 import { 
   ShieldCheck, 
   Package, 
-  ShoppingBag, 
   Users, 
   TrendingUp, 
   Plus, 
   Trash2, 
   Edit3, 
-  Check, 
   X, 
   Search, 
   Phone, 
   Mail, 
-  MapPin, 
-  ArrowLeft, 
   RefreshCw, 
   CheckCircle2, 
-  Clock, 
-  AlertCircle,
-  Smartphone,
   Eye,
-  ExternalLink,
   DollarSign,
   Layers,
   Filter,
-  Download,
-  Sliders,
   Sparkles,
   ChevronRight,
   MessageSquare,
   LogOut,
   BarChart3,
   Boxes,
-  HelpCircle,
-  Settings,
   Menu,
   Database,
   ArrowUpRight,
   Store,
   Tag,
-  Calendar,
-  CheckCircle,
-  Truck,
   CreditCard,
   Star,
   Image as ImageIcon
@@ -184,6 +169,7 @@ export default function DesktopAdminDashboard({ setActiveTab, onNavigateHome }) 
 
   const initialProductForm = {
     name: '',
+    category: 'cases',
     targetModel: 'iPhone 16 Pro Max',
     price: 1999,
     originalPrice: 2699,
@@ -229,6 +215,7 @@ export default function DesktopAdminDashboard({ setActiveTab, onNavigateHome }) 
 
     setProductFormData({
       name: prod.name || '',
+      category: prod.category || 'cases',
       targetModel: prod.targetModel || prod.compatibleModels?.[0] || 'iPhone 16 Pro Max',
       price: prod.price || 1999,
       originalPrice: prod.originalPrice || Math.round(prod.price * 1.35),
@@ -474,12 +461,18 @@ export default function DesktopAdminDashboard({ setActiveTab, onNavigateHome }) 
       const matchSearch = 
         p.name.toLowerCase().includes(productSearch.toLowerCase()) ||
         p.targetModel?.toLowerCase().includes(productSearch.toLowerCase()) ||
+        p.category?.toLowerCase().includes(productSearch.toLowerCase()) ||
         p.badge?.toLowerCase().includes(productSearch.toLowerCase());
 
       const matchSeries = 
         selectedProductSeriesFilter === 'all' ||
         (selectedProductSeriesFilter === 'inStock' && p.inStock !== false) ||
         (selectedProductSeriesFilter === 'outOfStock' && p.inStock === false) ||
+        (selectedProductSeriesFilter === 'phones' && p.category === 'phones') ||
+        (selectedProductSeriesFilter === 'cases' && p.category === 'cases') ||
+        (selectedProductSeriesFilter === 'powerbanks' && p.category === 'powerbanks') ||
+        (selectedProductSeriesFilter === 'chargers' && p.category === 'chargers') ||
+        ((selectedProductSeriesFilter === 'accessories' || selectedProductSeriesFilter === 'earpods') && (p.category === 'accessories' || p.category === 'earpods')) ||
         p.targetModel?.includes(selectedProductSeriesFilter);
 
       return matchSearch && matchSeries;
@@ -508,6 +501,7 @@ export default function DesktopAdminDashboard({ setActiveTab, onNavigateHome }) 
 
     const productPayload = {
       name: productFormData.name,
+      category: productFormData.category || 'cases',
       targetModel: productFormData.targetModel,
       compatibleModels: [productFormData.targetModel],
       price: Number(productFormData.price),
@@ -537,9 +531,9 @@ export default function DesktopAdminDashboard({ setActiveTab, onNavigateHome }) 
     } else {
       addProduct({
         ...productPayload,
-        id: 'case-' + Date.now(),
-        category: 'cases',
-        coverStyle: 'designer-cover'
+        id: (productFormData.category || 'prod') + '-' + Date.now(),
+        category: productFormData.category || 'cases',
+        coverStyle: productFormData.category === 'cases' ? 'designer-cover' : undefined
       });
     }
 
@@ -1297,11 +1291,16 @@ export default function DesktopAdminDashboard({ setActiveTab, onNavigateHome }) 
                     onChange={(e) => setSelectedProductSeriesFilter(e.target.value)}
                     className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 focus:outline-none cursor-pointer"
                   >
-                    <option value="all">All Models</option>
-                    <option value="iPhone 16">iPhone 16 Series</option>
-                    <option value="iPhone 15">iPhone 15 Series</option>
-                    <option value="iPhone 14">iPhone 14 Series</option>
-                    <option value="iPhone 13">iPhone 13 Series</option>
+                    <option value="all">All Products</option>
+                    <option value="phones">Mobile Phones (Smartphones)</option>
+                    <option value="cases">Cases & Covers</option>
+                    <option value="powerbanks">Power Banks</option>
+                    <option value="chargers">Fast Chargers</option>
+                    <option value="earpods">EarPods & Wireless Audio</option>
+                    <option value="iPhone 16">iPhone 16 Series Cases</option>
+                    <option value="iPhone 15">iPhone 15 Series Cases</option>
+                    <option value="iPhone 14">iPhone 14 Series Cases</option>
+                    <option value="iPhone 13">iPhone 13 Series Cases</option>
                     <option value="inStock">In Stock Only</option>
                     <option value="outOfStock">Out of Stock Only</option>
                   </select>
@@ -1317,36 +1316,36 @@ export default function DesktopAdminDashboard({ setActiveTab, onNavigateHome }) 
 
               </div>
 
-              {/* Products Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {/* Products Grid - 2 columns on mobile */}
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 {filteredAdminProducts.map((prod) => {
                   const productImages = prod.gallery || prod.images || (prod.image ? [prod.image] : ['/images/hero-desert-gold.jpg']);
                   return (
                     <div
                       key={prod.id}
-                      className="bg-white rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-sm transition p-4 flex flex-col justify-between space-y-3.5"
+                      className="bg-white rounded-xl sm:rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-sm transition p-2.5 sm:p-4 flex flex-col justify-between space-y-2 sm:space-y-3.5"
                     >
-                      <div className="space-y-3">
+                      <div className="space-y-2 sm:space-y-3">
                         {/* Thumbnail, Badges & Image Counter */}
-                        <div className="relative aspect-video rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
+                        <div className="relative aspect-video rounded-lg sm:rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
                           <img
                             src={prod.image || productImages[0]}
                             alt={prod.name}
                             className="w-full h-full object-cover"
                           />
-                          <div className="absolute top-2 left-2 flex items-center gap-1.5 flex-wrap">
-                            <span className="px-2 py-0.5 rounded-md bg-slate-950/80 text-amber-300 font-black text-[10px] uppercase">
-                              {prod.badge || 'Case'}
+                          <div className="absolute top-1 sm:top-2 left-1 sm:left-2 flex items-center gap-1 sm:gap-1.5 flex-wrap">
+                            <span className="px-1.5 sm:px-2 py-0.5 rounded sm:rounded-md bg-slate-950/85 text-amber-300 font-black text-[8px] sm:text-[10px] uppercase truncate max-w-[90px] sm:max-w-none">
+                              {prod.badge || (prod.category === 'phones' ? 'Phone' : prod.category === 'powerbanks' ? 'Power Bank' : prod.category === 'chargers' ? 'Charger' : prod.category === 'earpods' ? 'EarPods' : 'Case')}
                             </span>
-                            <span className="px-2 py-0.5 rounded-md bg-black/60 text-white font-bold text-[10px] backdrop-blur-xs flex items-center gap-1">
+                            <span className="hidden sm:flex px-2 py-0.5 rounded-md bg-black/60 text-white font-bold text-[10px] backdrop-blur-xs items-center gap-1">
                               <span>📷 {productImages.length} {productImages.length === 1 ? 'Photo' : 'Photos'}</span>
                             </span>
                           </div>
-                          <div className="absolute top-2 right-2">
+                          <div className="absolute top-1 sm:top-2 right-1 sm:right-2">
                             <button
                               type="button"
                               onClick={() => toggleStock(prod.id)}
-                              className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition cursor-pointer shadow-md ${
+                              className={`px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-black uppercase tracking-wider transition cursor-pointer shadow-md ${
                                 prod.inStock !== false
                                   ? 'bg-emerald-500 text-white hover:bg-emerald-600'
                                   : 'bg-rose-500 text-white hover:bg-rose-600'
@@ -1359,35 +1358,35 @@ export default function DesktopAdminDashboard({ setActiveTab, onNavigateHome }) 
 
                         {/* Info */}
                         <div>
-                          <div className="flex items-center justify-between text-[10px]">
-                            <span className="font-bold text-amber-700 uppercase tracking-wider">{prod.targetModel}</span>
-                            <span className="text-slate-400 font-medium">★ {prod.rating || '5.0'}</span>
+                          <div className="flex items-center justify-between text-[9px] sm:text-[10px]">
+                            <span className="font-bold text-amber-700 uppercase tracking-wider truncate max-w-[70%]">{prod.targetModel}</span>
+                            <span className="text-slate-400 font-medium shrink-0">★ {prod.rating || '5.0'}</span>
                           </div>
-                          <h4 className="text-sm font-black text-slate-900 leading-tight mt-0.5">{prod.name}</h4>
-                          <p className="text-xs text-slate-500 line-clamp-2 mt-1">{prod.description || prod.tagline}</p>
+                          <h4 className="text-xs sm:text-sm font-black text-slate-900 leading-snug mt-0.5 line-clamp-2">{prod.name}</h4>
+                          <p className="text-[11px] sm:text-xs text-slate-500 line-clamp-1 sm:line-clamp-2 mt-1">{prod.description || prod.tagline}</p>
                         </div>
                       </div>
 
                       {/* Pricing & Full Edit Controls */}
-                      <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+                      <div className="pt-2 sm:pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2">
                         <div>
-                          <div className="flex items-baseline gap-1.5">
-                            <span className="text-base font-black text-slate-900">₹{prod.price?.toLocaleString('en-IN')}</span>
+                          <div className="flex items-baseline gap-1 sm:gap-1.5">
+                            <span className="text-xs sm:text-base font-black text-slate-900">₹{prod.price?.toLocaleString('en-IN')}</span>
                             {prod.originalPrice && prod.originalPrice > prod.price && (
-                              <span className="text-xs text-slate-400 line-through font-medium">₹{prod.originalPrice}</span>
+                              <span className="text-[10px] sm:text-xs text-slate-400 line-through font-medium">₹{prod.originalPrice}</span>
                             )}
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-1.5">
+                        <div className="flex items-center gap-1 sm:gap-1.5 justify-end">
                           {/* Full Edit Modal Trigger Button */}
                           <button
                             type="button"
                             onClick={() => handleOpenEditProduct(prod)}
-                            className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition flex items-center gap-1 cursor-pointer"
+                            className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-[10px] sm:text-xs font-bold transition flex items-center gap-1 cursor-pointer flex-1 sm:flex-initial justify-center"
                             title="Edit all product details & gallery"
                           >
-                            <Edit3 className="w-3.5 h-3.5 text-amber-700" />
+                            <Edit3 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-700" />
                             <span>Edit</span>
                           </button>
 
@@ -1399,10 +1398,10 @@ export default function DesktopAdminDashboard({ setActiveTab, onNavigateHome }) 
                                 deleteProduct(prod.id);
                               }
                             }}
-                            className="p-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 transition cursor-pointer"
+                            className="p-1 sm:p-1.5 rounded-lg sm:rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 transition cursor-pointer shrink-0"
                             title="Delete Product"
                           >
-                            <Trash2 className="w-3.5 h-3.5" />
+                            <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                           </button>
                         </div>
                       </div>
@@ -1811,10 +1810,10 @@ export default function DesktopAdminDashboard({ setActiveTab, onNavigateHome }) 
                 </div>
                 <div>
                   <h3 className="text-base font-black text-slate-900 leading-tight">
-                    {productModalMode === 'edit' ? 'Edit Product & Gallery' : 'Add New iPhone Case'}
+                    {productModalMode === 'edit' ? 'Edit Product & Gallery' : 'Add New Product'}
                   </h3>
                   <p className="text-[11px] text-slate-500 font-medium">
-                    {productModalMode === 'edit' ? 'Update case specifications, pricing, and up to 5 gallery photos' : 'Publish a new iPhone case model to your active store catalog'}
+                    {productModalMode === 'edit' ? 'Update product specifications, pricing, and up to 5 gallery photos' : 'Publish a new product model to your active store catalog'}
                   </p>
                 </div>
               </div>
@@ -1851,22 +1850,49 @@ export default function DesktopAdminDashboard({ setActiveTab, onNavigateHome }) 
                   </div>
 
                   <div>
-                    <label className="font-bold text-slate-700 block mb-1">Target iPhone Model *</label>
+                    <label className="font-bold text-slate-700 block mb-1">Product Category *</label>
                     <select
-                      value={productFormData.targetModel}
-                      onChange={(e) => setProductFormData({ ...productFormData, targetModel: e.target.value })}
+                      value={productFormData.category || 'cases'}
+                      onChange={(e) => setProductFormData({ ...productFormData, category: e.target.value })}
                       className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold text-slate-800 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 cursor-pointer"
                     >
-                      {IPHONE_MODELS_BY_SERIES.map((group) => (
-                        <optgroup key={group.series} label={group.series} className="font-bold text-slate-900 bg-slate-100">
-                          {group.models.map((model) => (
-                            <option key={model} value={model} className="font-medium text-slate-800 bg-white">
-                              {model}
-                            </option>
-                          ))}
-                        </optgroup>
-                      ))}
+                      <option value="cases">Cases & Covers</option>
+                      <option value="phones">Mobile Phones (Smartphones)</option>
+                      <option value="powerbanks">Power Banks</option>
+                      <option value="chargers">Fast Chargers & Cables</option>
+                      <option value="earpods">EarPods & Wireless Audio</option>
                     </select>
+                  </div>
+
+                  <div>
+                    <label className="font-bold text-slate-700 block mb-1">
+                      {productFormData.category === 'cases' ? 'Target iPhone Model *' : 'Model / Variant / Compatibility *'}
+                    </label>
+                    {productFormData.category === 'cases' ? (
+                      <select
+                        value={productFormData.targetModel}
+                        onChange={(e) => setProductFormData({ ...productFormData, targetModel: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold text-slate-800 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 cursor-pointer"
+                      >
+                        {IPHONE_MODELS_BY_SERIES.map((group) => (
+                          <optgroup key={group.series} label={group.series} className="font-bold text-slate-900 bg-slate-100">
+                            {group.models.map((model) => (
+                              <option key={model} value={model} className="font-medium text-slate-800 bg-white">
+                                {model}
+                              </option>
+                            ))}
+                          </optgroup>
+                        ))}
+                      </select>
+                    ) : (
+                      <input
+                        type="text"
+                        value={productFormData.targetModel}
+                        onChange={(e) => setProductFormData({ ...productFormData, targetModel: e.target.value })}
+                        placeholder="e.g. 512GB Titanium Black, Universal Qi2/USB-C..."
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold text-slate-800 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                      />
+                    )}
                   </div>
 
                   <div>

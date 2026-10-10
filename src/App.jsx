@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ProductProvider } from './context/ProductContext';
 import { CartProvider } from './context/CartContext';
 import { OrderProvider } from './context/OrderContext';
-import { AuthProvider, useAuth } from './context/AuthContext';
+import { AuthProvider } from './context/AuthContext';
 
 // Main Views & Components
 import DesktopNavbar from './components/desktop/DesktopNavbar';
@@ -15,7 +15,6 @@ import DesktopContactView from './views/desktop/DesktopContactView';
 import DesktopAdminDashboard from './views/desktop/DesktopAdminDashboard';
 import DesktopAuthView from './views/desktop/DesktopAuthView';
 import DesktopOrdersView from './views/desktop/DesktopOrdersView';
-import MobileBottomNav from './components/mobile/MobileBottomNav';
 
 // Common Modals & Overlays
 import ProductQuickViewModal from './components/common/ProductQuickViewModal';
@@ -110,7 +109,7 @@ function AppContent() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-[#f7f1e6] text-[#1c140d] flex flex-col justify-between selection:bg-amber-500 selection:text-white pb-16 md:pb-0">
+    <div className="min-h-screen w-full bg-[#f7f1e6] text-[#1c140d] flex flex-col justify-between selection:bg-amber-500 selection:text-white">
       {/* Main Responsive Header & Store Layout */}
       <div className="w-full flex-1 flex flex-col justify-between">
         <DesktopNavbar activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -127,9 +126,6 @@ function AppContent() {
 
         <DesktopFooter setActiveTab={setActiveTab} onOpenLegal={setLegalDocument} />
       </div>
-
-      {/* Mobile Sticky Bottom Navigation */}
-      <MobileBottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {/* Shared Modals, Drawers & Overlays for Store */}
       <DesktopCartDrawer />

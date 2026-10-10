@@ -4,18 +4,15 @@ import {
   Award, 
   Zap, 
   Sparkles, 
-  Truck, 
   CheckCircle2, 
   MapPin, 
   Phone, 
   MessageSquare, 
   ArrowRight, 
   Layers, 
-  Cpu, 
-  Compass, 
-  HeartHandshake, 
-  Camera, 
-  Flame 
+  Smartphone, 
+  Headphones,
+  Compass 
 } from 'lucide-react';
 import { BRAND_STATS } from '../../data/reviews';
 import BrandLogo from '../../components/common/BrandLogo';
@@ -30,31 +27,31 @@ export default function DesktopAboutView({ setActiveTab }) {
 
   const productPillars = [
     {
-      icon: Cpu,
-      title: 'Grade 5 Aerospace Titanium',
-      tag: 'Materials',
-      desc: 'Precision-machined structural chassis inspired by the iPhone 16 Pro, providing featherlight weight with extreme tensile strength.',
+      icon: Smartphone,
+      title: 'Flagship 5G Phones',
+      tag: 'Flagships',
+      desc: '100% genuine Apple, Samsung, and OnePlus phones with official brand warranty.',
       color: 'text-amber-500 bg-amber-500/10 border-amber-500/20'
     },
     {
-      icon: Zap,
-      title: '38 N52 Neodymium Magnets',
-      tag: 'MagSafe Qi2',
-      desc: '3,500g holding force with dual-aligned circular neodymium coils, enabling peak 15W MagSafe charging without overheating.',
-      color: 'text-yellow-500 bg-yellow-500/10 border-yellow-500/20'
-    },
-    {
       icon: ShieldCheck,
-      title: 'German Bayer Anti-UV Matrix',
-      tag: 'Zero-Yellowing',
-      desc: 'Infused with anti-UV polymer molecules that resist humidity, oxidation, and skin oils in tropical weather with a 24-Month Guarantee.',
+      title: '16FT Drop Armor',
+      tag: 'Drop Armor',
+      desc: 'Military-grade drop shield cases crafted with aerospace titanium & Bayer polymer.',
       color: 'text-emerald-500 bg-emerald-500/10 border-emerald-500/20'
     },
     {
-      icon: Camera,
-      title: '9H Sapphire Lens Armor',
-      tag: 'Optics',
-      desc: 'Double-chamfered sapphire crystal bezels protecting the protruding 48MP camera cluster against micro-abrasions and drops.',
+      icon: Zap,
+      title: 'Power & Fast Charging',
+      tag: 'Power Tech',
+      desc: 'High-speed 20,000mAh banks, GaN wall chargers & MagSafe Qi2 wireless docks.',
+      color: 'text-yellow-500 bg-yellow-500/10 border-yellow-500/20'
+    },
+    {
+      icon: Headphones,
+      title: 'Studio ANC Audio',
+      tag: 'Acoustics',
+      desc: 'Premium wireless EarPods with Active Noise Cancellation & immersive spatial audio.',
       color: 'text-blue-500 bg-blue-500/10 border-blue-500/20'
     }
   ];
@@ -76,12 +73,12 @@ export default function DesktopAboutView({ setActiveTab }) {
         </div>
         
         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
-          Uncompromising Protection. <br />
-          <span className="text-gradient-gold">Tailored Exclusively for iPhone.</span>
+          Flagship Mobiles & Armor. <br />
+          <span className="text-gradient-gold">Engineered for Excellence.</span>
         </h1>
         
         <p className="text-xs sm:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto mt-4 font-normal">
-          Born in Chennai, India, Case Matrix was founded by industrial designers and Apple enthusiasts with a singular conviction: to create armor that matches Apple’s precision engineering without sacrificing luxury aesthetics.
+          Born in Chennai, India, Case Matrix was founded with a singular conviction: to deliver genuine flagship 5G smartphones, aerospace-grade titanium armor cases, high-capacity power banks, MagSafe docks, and studio-grade EarPods across India.
         </p>
 
         <div className="pt-6 flex items-center justify-center gap-3 flex-wrap">
@@ -90,10 +87,10 @@ export default function DesktopAboutView({ setActiveTab }) {
             onClick={() => handleNav('products')}
             className="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-amber-500/25 flex items-center gap-2 transition active:scale-95 cursor-pointer"
           >
-            Explore iPhone Gear <ArrowRight className="w-4 h-4 text-slate-950" />
+            Explore Mobiles & Accessories <ArrowRight className="w-4 h-4 text-slate-950" />
           </button>
           <a
-            href="https://wa.me/919384694189?text=Hi%20Case%20Matrix!%20Tell%20me%20more%20about%20your%20products"
+            href="https://wa.me/919384694189?text=Hi%20Case%20Matrix!%20Tell%20me%20more%20about%20your%20mobiles%20and%20accessories"
             target="_blank"
             rel="noreferrer"
             className="px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/15 text-white border border-white/20 font-bold text-xs sm:text-sm transition flex items-center gap-2 cursor-pointer"
@@ -128,18 +125,18 @@ export default function DesktopAboutView({ setActiveTab }) {
             </h2>
             
             <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-              Every iPhone is an engineering masterpiece crafted from aerospace titanium, ceramic shield, and custom silicon. Yet, most phone cases available in India fall into two extremes: cheap silicone covers that turn yellow and lose shape within weeks, or overly bulky cases that ruin the iPhone's sleek form factor.
+              Every flagship device is an engineering masterpiece. Yet, finding authentic smartphones paired with certified drop-protection armor, high-capacity 20,000mAh power banks, MagSafe Qi2 desktop docks, and ANC EarPods under one trusted roof in India has always been a challenge.
             </p>
             
             <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-              We founded <strong>Case Matrix</strong> to bridge this gap. Operating from our flagship design studio at Express Avenue in Chennai, our team prototypes, drop-tests, and refines every case to ensure flawless <strong>tactile camera control</strong>, <strong>15W Qi2 MagSafe alignment</strong>, and <strong>16-foot military shock protection</strong> tailored for everyday Indian life.
+              We founded <strong>Case Matrix</strong> to bridge this gap. Operating from our flagship studio at Express Avenue in Chennai, our team tests, curates, and delivers genuine <strong>flagship 5G smartphones</strong>, <strong>16-foot drop-certified armor cases</strong>, <strong>high-output fast chargers</strong>, and <strong>audiophile-grade wireless EarPods</strong> tailored for Indian life.
             </p>
           </div>
 
           <div className="grid grid-cols-2 gap-3 pt-4 border-t border-slate-100">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span className="text-xs font-bold text-slate-900">100% Genuine Materials</span>
+              <span className="text-xs font-bold text-slate-900">100% Genuine Devices & Gear</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
@@ -169,7 +166,7 @@ export default function DesktopAboutView({ setActiveTab }) {
                 Visit Us at Express Avenue
               </h3>
               <p className="text-xs text-slate-300 leading-relaxed">
-                Experience our titanium cases, test MagSafe magnetic force, and receive custom model fitting at our Chennai flagship store.
+                Test our flagship mobiles, experience titanium armor cases, try out high-capacity power banks, and test MagSafe charging stands in person at our Chennai store.
               </p>
             </div>
 
@@ -217,28 +214,28 @@ export default function DesktopAboutView({ setActiveTab }) {
             <Layers className="w-3.5 h-3.5 text-amber-600 shrink-0" /> Advanced Engineering
           </div>
           <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
-            How We Build Unrivaled iPhone Armor
+            Engineered for Mobiles & Premium Gear
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 font-medium">
-            Every millimeter is calculated to protect your investment without bulk.
+            From flagship processors to drop-shield alloys and GaN fast-charging circuits, every device and accessory is built for longevity.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 w-full">
           {productPillars.map((item, idx) => {
             const Icon = item.icon;
             return (
               <div
                 key={idx}
-                className="p-5 sm:p-6 rounded-3xl bg-white border border-slate-200/90 shadow-xs hover:shadow-md transition-all space-y-3 flex flex-col justify-between"
+                className="p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-xs hover:shadow-md transition-all space-y-2 sm:space-y-3 flex flex-col justify-between"
               >
                 <div>
-                  <div className={`w-11 h-11 rounded-2xl flex items-center justify-center border mb-3 ${item.color}`}>
-                    <Icon className="w-5 h-5" />
+                  <div className={`w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl flex items-center justify-center border mb-2 sm:mb-3 ${item.color}`}>
+                    <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
-                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">{item.tag}</span>
-                  <h4 className="text-sm sm:text-base font-bold text-slate-900 mt-1">{item.title}</h4>
-                  <p className="text-xs text-slate-600 font-medium leading-relaxed mt-2">{item.desc}</p>
+                  <span className="text-[9px] sm:text-[10px] font-bold text-slate-500 uppercase tracking-wider block">{item.tag}</span>
+                  <h4 className="text-xs sm:text-base font-bold text-slate-900 mt-1 leading-snug">{item.title}</h4>
+                  <p className="text-[11px] sm:text-xs text-slate-600 font-medium leading-relaxed mt-1.5 sm:mt-2">{item.desc}</p>
                 </div>
               </div>
             );
@@ -254,10 +251,10 @@ export default function DesktopAboutView({ setActiveTab }) {
               <Sparkles className="w-3.5 h-3.5" /> 100% Satisfaction Guarantee
             </span>
             <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white">
-              Ready to Upgrade Your iPhone Experience?
+              Ready to Upgrade Your Mobile & Accessory Experience?
             </h3>
             <p className="text-xs text-slate-300 leading-relaxed">
-              Explore our complete collection of titanium cases, MagSafe power gear, and sapphire lens shields with express pan-India dispatch.
+              Explore our curated catalog of genuine flagship 5G smartphones, military drop-shield cases, fast power banks, and studio EarPods with express pan-India dispatch.
             </p>
           </div>
 

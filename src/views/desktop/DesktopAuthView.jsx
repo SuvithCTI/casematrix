@@ -9,9 +9,7 @@ import {
   Eye, 
   EyeOff, 
   Store, 
-  ArrowRight,
-  ShieldCheck
-} from 'lucide-react';
+  ArrowRight } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import BrandLogo from '../../components/common/BrandLogo';
 

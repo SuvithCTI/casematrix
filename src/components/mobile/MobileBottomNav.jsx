@@ -57,7 +57,7 @@ export default function MobileBottomNav({ activeTab, setActiveTab }) {
         >
           <Smartphone className={`w-5 h-5 ${activeTab === 'products' ? 'text-amber-400' : 'text-slate-400'}`} />
           <span className={`text-[10px] mt-0.5 tracking-tight ${activeTab === 'products' ? 'text-amber-300 font-black' : 'text-slate-400'}`}>
-            Cases
+            Products
           </span>
         </button>
 

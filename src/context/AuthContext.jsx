@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
-import { safeJSONParse, sanitizeText, validatePassword } from '../utils/security';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { safeJSONParse, validatePassword } from '../utils/security';
 
 const AuthContext = createContext();
 
@@ -8,7 +8,7 @@ const DEFAULT_ADMIN = {
   name: 'Case Matrix Admin',
   email: 'casematrix@gmail.com',
   password: 'casematrix',
-  phone: '+91 93846 94189',
+  phone: '+91 98765 43210',
   role: 'admin',
   createdAt: '2026-01-01T00:00:00.000Z'
 };
@@ -323,7 +323,7 @@ export function AuthProvider({ children }) {
           name: 'Case Matrix Admin',
           email: 'casematrix@gmail.com',
           role: 'admin',
-          phone: '+91 93846 94189',
+          phone: '+91 98765 43210',
           createdAt: '2026-01-01T00:00:00.000Z',
           lastLoginAt: new Date().toISOString()
         };

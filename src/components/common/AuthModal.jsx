@@ -6,10 +6,7 @@ import {
   User, 
   Phone, 
   ShieldCheck, 
-  Sparkles, 
-  ArrowRight, 
   KeyRound, 
-  CheckCircle2, 
   AlertCircle,
   Eye,
   EyeOff
@@ -286,7 +283,7 @@ export default function AuthModal({ onNavigateAdmin }) {
                     type="tel"
                     value={signupPhone}
                     onChange={(e) => setSignupPhone(e.target.value)}
-                    placeholder="+91 93846 94189"
+                    placeholder="+91 98765 43210"
                     className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-white/5 border border-white/15 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 focus:bg-white/10"
                   />
                 </div>

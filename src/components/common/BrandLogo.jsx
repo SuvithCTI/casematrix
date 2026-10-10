@@ -96,7 +96,7 @@ export default function BrandLogo({ size = 'md', showSubtitle = true, className 
         </span>
         {showSubtitle && (
           <p className={`${subtitleSizes[size] || subtitleSizes.md} ${isLight ? 'text-amber-600' : 'text-amber-400'} mt-1 leading-none font-bold`}>
-            iPhone Studio India
+            Mobiles & Accessories
           </p>
         )}
       </div>

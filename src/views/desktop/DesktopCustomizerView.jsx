@@ -3,7 +3,7 @@ import InteractiveCaseViewer from '../../components/common/InteractiveCaseViewer
 import { useProduct } from '../../context/ProductContext';
 import { useCart } from '../../context/CartContext';
 import { useOrder } from '../../context/OrderContext';
-import { Sparkles, ShoppingBag, MessageSquare, Check, ShieldCheck, Zap, Layers, Type } from 'lucide-react';
+import { Sparkles, ShoppingBag, MessageSquare, Check, Type } from 'lucide-react';
 import { PRODUCTS } from '../../data/products';
 import { COLOR_OPTIONS, IPHONE_MODELS } from '../../data/categories';
 

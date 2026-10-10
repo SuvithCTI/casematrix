@@ -5,7 +5,7 @@ import { useCart } from '../../context/CartContext';
 import { useOrder } from '../../context/OrderContext';
 import { useAuth } from '../../context/AuthContext';
 
-export default function DesktopProductCard({ product }) {
+export default function DesktopProductCard({ product, className = '' }) {
   const { setQuickViewProduct, openCustomizer } = useProduct();
   const { addToCart } = useCart();
   const { generateSingleProductWhatsAppURL, createOrder } = useOrder();
@@ -27,7 +27,7 @@ export default function DesktopProductCard({ product }) {
     const customer = {
       name: currentUser?.name || 'Storefront Visitor',
       email: currentUser?.email || 'customer@casematrix.in',
-      phone: currentUser?.phone || '+91 93846 94189',
+      phone: currentUser?.phone || '+91 98765 43210',
       address: 'WhatsApp Direct Order',
       city: 'Express Avenue',
       state: 'Tamil Nadu',
@@ -70,7 +70,7 @@ export default function DesktopProductCard({ product }) {
   return (
     <div
       onClick={() => setQuickViewProduct(product)}
-      className="group relative rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 p-2.5 sm:p-5 shadow-xs hover:shadow-lg hover:border-amber-500/40 transition-all flex flex-col justify-between cursor-pointer"
+      className={`group relative rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 p-2.5 sm:p-5 shadow-xs hover:shadow-lg hover:border-amber-500/40 transition-all flex flex-col justify-between cursor-pointer ${className}`}
     >
       {/* Product Image Stage */}
       <div>
@@ -82,13 +82,6 @@ export default function DesktopProductCard({ product }) {
             decoding="async"
             className={`w-full h-full ${product.imageFit === 'contain' ? 'object-contain p-1' : 'object-cover'} rounded-lg sm:rounded-xl group-hover:scale-103 transition-all duration-300`}
           />
-
-          {/* Badge */}
-          {product.badge && (
-            <span className="absolute top-1.5 left-1.5 sm:top-3 sm:left-3 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-slate-900 text-white text-[8px] sm:text-[10px] font-extrabold shadow-xs">
-              {product.badge}
-            </span>
-          )}
 
           {/* Quick View Hover Trigger */}
           <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity hidden sm:flex items-center justify-center gap-2">
@@ -121,8 +114,8 @@ export default function DesktopProductCard({ product }) {
               <span className="truncate">{product.targetModel}</span>
             </span>
           ) : (
-            <span className="inline-flex items-center gap-1 px-1.5 sm:px-2.5 py-0.5 rounded-md bg-slate-100 text-[8.5px] sm:text-[10px] font-bold text-slate-700">
-              MagSafe
+            <span className="inline-flex items-center gap-1 px-1.5 sm:px-2.5 py-0.5 rounded-md bg-slate-100 text-[8.5px] sm:text-[10px] font-bold text-slate-700 capitalize">
+              {product.category === 'phones' ? 'Smartphone' : product.category === 'powerbanks' ? 'Power Bank' : product.category === 'chargers' ? 'Fast Charger' : (product.category === 'accessories' ? 'Accessory' : 'Official')}
             </span>
           )}
 
@@ -145,34 +138,8 @@ export default function DesktopProductCard({ product }) {
         </p>
       </div>
 
-      {/* Footer Details: Color Swatches, Price & Quick Actions */}
-      <div className="mt-1.5 sm:mt-4 pt-1.5 sm:pt-3 border-t border-slate-100 space-y-1.5 sm:space-y-3">
-        {/* Interactive Real-Time Color Swatches */}
-        {product.colors && product.colors.length > 0 && (
-          <div className="flex items-center justify-between gap-1">
-            <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] py-0.5">
-              {product.colors.map((c) => (
-                <button
-                  key={c.name}
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setActiveColor(c);
-                  }}
-                  className={`w-3 h-3 sm:w-5 sm:h-5 rounded-full border shrink-0 transition-all ${
-                    activeColor?.name === c.name ? 'border-amber-600 scale-125 ring-2 ring-amber-500/40 shadow-xs' : 'border-slate-300'
-                  }`}
-                  style={{ backgroundColor: c.hex }}
-                  title={`Select ${c.name}`}
-                />
-              ))}
-            </div>
-            <span className="text-[9px] sm:text-[11px] text-slate-800 truncate max-w-[80px] sm:max-w-[130px] font-bold hidden sm:inline">
-              {activeColor?.name || ''}
-            </span>
-          </div>
-        )}
-
+      {/* Footer Details: Price & Quick Actions */}
+      <div className="mt-1.5 sm:mt-4 pt-1.5 sm:pt-3 border-t border-slate-100">
         {/* Price & Action Buttons */}
         <div className="flex items-center justify-between gap-1 sm:gap-2">
           <div>

@@ -1,33 +1,41 @@
-import React, { useState } from 'react';
-import { Sparkles, ArrowRight, ShieldCheck, Zap, Star, MessageSquare, ChevronRight, Smartphone } from 'lucide-react';
+import React from 'react';
+import { Sparkles, ArrowRight, Star, MessageSquare } from 'lucide-react';
 import HeroPhoneShowcase from '../../components/common/HeroPhoneShowcase';
 import MobileCategoryPills from '../../components/mobile/MobileCategoryPills';
 import MobileProductCard from '../../components/mobile/MobileProductCard';
-import ExplodedLayerShowcase from '../../components/common/ExplodedLayerShowcase';
-import { PRODUCTS } from '../../data/products';
-import { COLOR_OPTIONS, IPHONE_MODELS } from '../../data/categories';
-import { REVIEWS, BRAND_STATS } from '../../data/reviews';
+import { REVIEWS } from '../../data/reviews';
 import { useProduct } from '../../context/ProductContext';
 import { useOrder } from '../../context/OrderContext';
 
 export default function MobileHomeView({ setActiveTab }) {
-  const [heroColor, setHeroColor] = useState('#c5b49e');
-  const { setSelectedModel } = useProduct();
+  const { products, setSelectedCategory, setSelectedModel } = useProduct();
   const { setIsEnquiryModalOpen } = useOrder();
+
+  const featuredMobileCatalog = [
+    products.find(p => p.category === 'phones'),
+    products.find(p => p.category === 'cases'),
+    products.find(p => p.category === 'powerbanks'),
+    products.find(p => p.category === 'chargers'),
+    products.find(p => p.category === 'earpods'),
+  ].filter(Boolean);
 
   return (
     <div className="space-y-7 px-4 py-4 pb-28">
       {/* 1. Mobile Hero Showcase with Silk Waves Background */}
       <section className="space-y-4">
-        <HeroPhoneShowcase activeColor={heroColor} setActiveColor={setHeroColor} />
+        <HeroPhoneShowcase />
 
         <div className="grid grid-cols-2 gap-2.5">
           <button
             type="button"
-            onClick={() => setActiveTab('products')}
+            onClick={() => {
+              setSelectedCategory('all');
+              setSelectedModel('all');
+              setActiveTab('products');
+            }}
             className="min-h-[44px] py-3 px-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-black text-xs flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition"
           >
-            Shop Cases <ArrowRight className="w-3.5 h-3.5 text-amber-400" />
+            Shop Mobiles & Gear <ArrowRight className="w-3.5 h-3.5 text-amber-400" />
           </button>
           <button
             type="button"
@@ -54,42 +62,20 @@ export default function MobileHomeView({ setActiveTab }) {
         <MobileCategoryPills />
       </section>
 
-      {/* 3. iPhone Model Quick Chips */}
-      <section className="space-y-2">
-        <span className="text-xs font-bold text-slate-900 uppercase tracking-wider block px-1">
-          Select Your iPhone Model
-        </span>
-        <div className="grid grid-cols-2 gap-2">
-          {IPHONE_MODELS.slice(1, 5).map((m) => (
-            <button
-              key={m.id}
-              type="button"
-              onClick={() => {
-                setSelectedModel(m.id);
-                setActiveTab('products');
-              }}
-              className="p-3.5 rounded-2xl bg-white border border-slate-200 text-left flex items-center justify-between shadow-xs hover:border-amber-500/50"
-            >
-              <div>
-                <p className="text-xs font-bold text-slate-900">{m.name}</p>
-                <p className="text-[10px] text-amber-700 font-bold">View Cases →</p>
-              </div>
-              <Smartphone className="w-4 h-4 text-slate-400" />
-            </button>
-          ))}
-        </div>
-      </section>
-
-      {/* 4. Trending Best Sellers Grid */}
+      {/* 4. Trending Best Sellers Grid: Mobiles & Accessories */}
       <section className="space-y-3">
         <div className="flex justify-between items-center px-1">
           <div>
-            <h3 className="text-base font-bold text-slate-900">Trending iPhone Gear</h3>
-            <p className="text-[11px] text-slate-700 font-medium">Top rated MagSafe cases & protectors in ₹</p>
+            <h3 className="text-base font-bold text-slate-900">Trending Mobiles & Gear</h3>
+            <p className="text-[11px] text-slate-700 font-medium">Top smartphones, MagSafe cases, banks & EarPods</p>
           </div>
           <button
             type="button"
-            onClick={() => setActiveTab('products')}
+            onClick={() => {
+              setSelectedCategory('all');
+              setSelectedModel('all');
+              setActiveTab('products');
+            }}
             className="text-xs font-bold text-amber-700"
           >
             All Products →
@@ -97,15 +83,10 @@ export default function MobileHomeView({ setActiveTab }) {
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          {PRODUCTS.slice(0, 4).map((p) => (
+          {featuredMobileCatalog.map((p) => (
             <MobileProductCard key={p.id} product={p} />
           ))}
         </div>
-      </section>
-
-      {/* 5. 2D Exploded Layer Drop Protection */}
-      <section>
-        <ExplodedLayerShowcase />
       </section>
 
       {/* 6. Customer Reviews */}
@@ -146,7 +127,7 @@ export default function MobileHomeView({ setActiveTab }) {
           Chat with our concierge on WhatsApp for real photos, compatibility advice, and direct orders with instant UPI.
         </p>
         <a
-          href="https://wa.me/919384694189?text=Hi%20Case%20Matrix!%20Need%20help%20choosing%20an%20iPhone%20case"
+          href="https://wa.me/919876543210?text=Hi%20Case%20Matrix!%20Need%20help%20choosing%20an%20iPhone%20case"
           target="_blank"
           rel="noreferrer"
           className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-black flex items-center justify-center gap-2 shadow-md inline-block"

@@ -335,7 +335,7 @@ export function OrderProvider({ children }) {
 
   // Direct WhatsApp Order Generator with INR currency
   const generateWhatsAppOrderURL = (cartItems, pricing, customerInfo = null, customMessage = null) => {
-    const supportPhone = '919384694189'; // Indian format for wa.me
+    const supportPhone = '919876543210'; // Indian format for wa.me
     
     let text = `👋 *Hello Case Matrix!*\nI would like to place an order from your website.\n\n`;
     
@@ -365,8 +365,11 @@ export function OrderProvider({ children }) {
 
   // Direct single-product WhatsApp enquiry in INR
   const generateSingleProductWhatsAppURL = (product, color = null, model = null) => {
-    const supportPhone = '919384694189';
-    const text = `👋 Hi Case Matrix! I'm interested in buying for my iPhone:\n\n📱 *${product.name}*\n• Compatible iPhone: ${model || 'iPhone 16 Pro Max'}\n• Color Finish: ${color?.name || product.colors?.[0]?.name || 'Standard'}\n• Price: ₹${product.price.toLocaleString('en-IN')}\n\nCan you please share real live photos and delivery timeframe across India?`;
+    const supportPhone = '919876543210';
+    const isCase = product.category === 'cases';
+    const modelLine = isCase ? `\n• Compatible Model: ${model || product.targetModel || 'iPhone 16 Pro Max'}` : '';
+    const colorLine = color?.name ? `\n• Color Finish: ${color.name}` : (product.colors?.[0]?.name ? `\n• Color Finish: ${product.colors[0].name}` : '');
+    const text = `👋 Hi Case Matrix! I'm interested in ordering:\n\n📱 *${product.name}*${modelLine}${colorLine}\n• Price: ₹${product.price.toLocaleString('en-IN')}\n\nCan you please share real live photos and delivery timeframe across India?`;
     return `https://wa.me/${supportPhone}?text=${encodeURIComponent(text)}`;
   };
 

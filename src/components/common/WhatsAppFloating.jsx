@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { MessageSquare, X, Send, Sparkles, PhoneCall, HelpCircle, Package } from 'lucide-react';
+import { MessageSquare, X, Send } from 'lucide-react';
 
 export default function WhatsAppFloating() {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState('');
-  const supportNumber = '919384694189';
+  const supportNumber = '919876543210';
 
   const quickPrompts = [
-    { title: 'Check iPhone 16 Pro Max Stock', text: 'Hi! Is the Apex Titanium Armor case in stock for iPhone 16 Pro Max in Desert Gold?' },
-    { title: 'Free Laser Engraving Query', text: 'Hi! Can you engrave my name on the vegan leather iPhone case?' },
-    { title: 'Track My Active Order', text: 'Hello! I would like to check the tracking status of my recent iPhone accessory order.' },
-    { title: 'Bulk & Corporate Indian Orders', text: 'Hello, we are looking for 25+ MagSafe cases with custom company logo for our team in India.' },
+    { title: 'Check Mobile / Case Stock', text: 'Hi! Is the iPhone 16 Pro Max or Titanium case in stock?' },
+    { title: 'Power Bank & Charger Enquiry', text: 'Hi! I would like recommendations for fast charging power banks and wireless stands.' },
+    { title: 'EarPods & Audio Details', text: 'Hello! Can you share details and delivery timeframe for AirPods Pro 2?' },
+    { title: 'Bulk & Corporate Enquiries', text: 'Hello, we are looking for a bulk order quote for mobiles and accessories.' },
   ];
 
   const handleSend = (textToSend) => {

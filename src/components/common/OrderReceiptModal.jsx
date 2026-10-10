@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, CheckCircle2, Printer, MessageSquare, Package, Shield } from 'lucide-react';
+import { X, CheckCircle2, Printer, MessageSquare, Package } from 'lucide-react';
 import { useOrder } from '../../context/OrderContext';
 
 export default function OrderReceiptModal() {
@@ -12,8 +12,8 @@ export default function OrderReceiptModal() {
   };
 
   const handleWhatsAppStatus = () => {
-    const supportPhone = '919384694189';
-    const text = `Hi Case Matrix Team! I just placed iPhone accessory order *#${activeOrderReceipt.orderId}* for ₹${activeOrderReceipt.pricing.total.toLocaleString('en-IN')}. Please confirm dispatch timeframe.`;
+    const supportPhone = '919876543210';
+    const text = `Hi Case Matrix Team! I just placed order *#${activeOrderReceipt.orderId}* for ₹${activeOrderReceipt.pricing.total.toLocaleString('en-IN')}. Please confirm dispatch timeframe.`;
     window.open(`https://wa.me/${supportPhone}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -32,7 +32,7 @@ export default function OrderReceiptModal() {
           <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md mx-auto flex items-center justify-center mb-3">
             <CheckCircle2 className="w-8 h-8 text-white" />
           </div>
-          <h3 className="text-2xl font-black tracking-tight text-white">iPhone Order Confirmed!</h3>
+          <h3 className="text-2xl font-black tracking-tight text-white">Order Confirmed!</h3>
           <p className="text-xs text-amber-100 mt-1">
             Order Reference: <span className="font-mono font-bold bg-black/20 px-2 py-0.5 rounded-md text-white">{activeOrderReceipt.orderId}</span>
           </p>

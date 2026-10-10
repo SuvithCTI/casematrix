@@ -1074,5 +1074,604 @@ export const PRODUCTS = [
       'Qi and MagSafe wireless charging compatible'
     ],
     inStock: true
+  },
+
+  // =========================================================================
+  // 1. MOBILE PHONES (SMARTPHONES)
+  // =========================================================================
+
+  {
+    id: 'phone-iphone-17',
+    name: 'Apple iPhone 17 (256 GB) - Mist Blue',
+    targetModel: 'iPhone 17',
+    category: 'phones',
+    price: 82900,
+    originalPrice: 89900,
+    rating: 5.0,
+    reviewsCount: 420,
+    badge: 'All-New iPhone 17',
+    tagline: 'Vertical Pill Dual Camera • Dynamic Island • A19 Bionic • Ultra-Slim Chassis',
+    description: 'The next-generation iPhone 17 preview featuring a redesigned vertical dual-camera pill array, 120Hz ProMotion Super Retina XDR display, anti-reflective ceramic shield glass, and next-generation A19 processor.',
+    image: '/images/iphone-17.jpg',
+    imageFit: 'contain',
+    gallery: [
+      '/images/iphone-17.jpg'
+    ],
+    compatibleModels: ['iPhone 17'],
+    colors: [
+      { name: 'Mist Blue', hex: '#93c5fd', image: '/images/iphone-17.jpg', default: true }
+    ],
+    material: 'Aerospace-Grade Aluminum Enclosure with Next-Gen Ceramic Shield Glass',
+    features: [
+      'All-new vertical pill camera layout optimized for spatial video',
+      '120Hz ProMotion Super Retina XDR display with ultra-thin bezels',
+      'Next-generation A19 Bionic chip with advanced neural engine',
+      'Up to 30 hours video playback battery endurance',
+      'Tactile capacitive Action & Camera Control buttons'
+    ],
+    inStock: true
+  },
+
+  {
+    id: 'phone-iphone-16-pro-max',
+    name: 'Apple iPhone 16 Pro Max (256 GB) - Desert Titanium',
+    targetModel: 'iPhone 16 Pro Max',
+    category: 'phones',
+    price: 144900,
+    originalPrice: 149900,
+    rating: 5.0,
+    reviewsCount: 890,
+    badge: 'Pro Max Flagship',
+    tagline: 'A18 Pro Chip • 6.9" Super Retina XDR • 48MP Fusion Camera • Camera Control',
+    description: 'The ultimate iPhone. Featuring a grade-5 titanium design with a larger 6.9-inch Super Retina XDR display, breakthrough Camera Control button, 4K 120 fps Dolby Vision, and the industry-leading A18 Pro chip for Apple Intelligence.',
+    image: '/images/iphone-16-pro-max.jpg',
+    imageFit: 'contain',
+    gallery: [
+      '/images/iphone-16-pro-max.jpg'
+    ],
+    compatibleModels: ['iPhone 16 Pro Max'],
+    colors: [
+      { name: 'Desert Titanium', hex: '#c5b49e', image: '/images/iphone-16-pro-max.jpg', default: true }
+    ],
+    material: 'Aerospace-Grade 5 Titanium Chassis with Ceramic Shield Gen 2',
+    features: [
+      'A18 Pro Bionic chip built on 3nm transistor technology',
+      'Dedicated tactile Camera Control sensor on chassis',
+      '48MP Fusion main camera + 48MP Ultra Wide + 5x Telephoto',
+      'Up to 33 hours video playback battery life',
+      'Apple Intelligence with private cloud compute'
+    ],
+    inStock: true
+  },
+
+  {
+    id: 'phone-iphone-15',
+    name: 'Apple iPhone 15 (128 GB) - Starlight White',
+    targetModel: 'iPhone 15',
+    category: 'phones',
+    price: 69900,
+    originalPrice: 79900,
+    rating: 4.8,
+    reviewsCount: 1120,
+    badge: 'Top Value Choice',
+    tagline: 'Dynamic Island • 48MP Main Camera • A16 Bionic • Universal USB-C',
+    description: 'Packed with beloved flagship features: Dynamic Island alerts, an advanced 48MP primary sensor with 2x optical-quality zoom, color-infused back glass, and convenient USB-C port.',
+    image: '/images/iphone-15.jpg',
+    imageFit: 'contain',
+    gallery: [
+      '/images/iphone-15.jpg'
+    ],
+    compatibleModels: ['iPhone 15'],
+    colors: [
+      { name: 'Starlight White', hex: '#f8fafc', image: '/images/iphone-15.jpg', default: true }
+    ],
+    material: 'Color-Infused Glass Back with Aerospace Aluminum Enclosure',
+    features: [
+      'Interactive Dynamic Island for live activity updates',
+      '48MP main camera with automatic portrait capture mode',
+      'All-day battery life with up to 20 hours video streaming',
+      'Universal USB-C connector with reverse device charging',
+      'A16 Bionic chip with 5-core graphics'
+    ],
+    inStock: true
+  },
+
+  {
+    id: 'phone-samsung-s24-ultra',
+    name: 'Samsung Galaxy S24 Ultra 5G (256 GB) - Titanium Gray',
+    targetModel: 'Samsung Galaxy S24 Ultra',
+    category: 'phones',
+    price: 129999,
+    originalPrice: 134999,
+    rating: 4.9,
+    reviewsCount: 780,
+    badge: 'Galaxy AI King',
+    tagline: 'Snapdragon 8 Gen 3 • 200MP Quad Camera • S-Pen Built-In • Flat Display',
+    description: 'The pinnacle of Android craftsmanship. Titanium armor enclosure, built-in precision S-Pen stylus, 200MP optical zoom camera matrix, flat 6.8-inch Dynamic AMOLED 2X, and Galaxy AI live translate.',
+    image: '/images/samsung-s24-ultra.jpg',
+    imageFit: 'contain',
+    gallery: [
+      '/images/samsung-s24-ultra.jpg'
+    ],
+    compatibleModels: ['Samsung Galaxy S24 Ultra'],
+    colors: [
+      { name: 'Titanium Gray', hex: '#4b5563', image: '/images/samsung-s24-ultra.jpg', default: true },
+      { name: 'Titanium Black', hex: '#111827', image: '/images/samsung-s24-ultra.jpg' }
+    ],
+    material: 'Titanium Frame with Corning Gorilla Armor Anti-Reflective Glass',
+    features: [
+      'Built-in S-Pen stylus for sketching and note-taking',
+      '200MP Quad Telephoto camera with 100x Space Zoom',
+      'Galaxy AI Circle to Search and Live Call Translation',
+      '5000mAh battery with 45W Fast Charging support',
+      'Corning Gorilla Armor reduces screen reflections by 75%'
+    ],
+    inStock: true
+  },
+
+  {
+    id: 'phone-oneplus-12',
+    name: 'OnePlus 12 5G (256 GB / 12GB RAM) - Flowy Emerald',
+    targetModel: 'OnePlus 12',
+    category: 'phones',
+    price: 64999,
+    originalPrice: 69999,
+    rating: 4.8,
+    reviewsCount: 520,
+    badge: 'Speed Monster',
+    tagline: 'Snapdragon 8 Gen 3 • 4th Gen Hasselblad Camera • 100W SUPERVOOC Charge',
+    description: 'Blazing fast speed meets luxury aesthetic. Features the latest Snapdragon 8 Gen 3 processor, 4th Gen Hasselblad camera system with 64MP periscope telephoto, and 100W wired fast charging with a huge 5400mAh battery.',
+    image: '/images/oneplus-12.jpg',
+    imageFit: 'contain',
+    gallery: [
+      '/images/oneplus-12.jpg'
+    ],
+    compatibleModels: ['OnePlus 12'],
+    colors: [
+      { name: 'Flowy Emerald', hex: '#0f766e', image: '/images/oneplus-12.jpg', default: true },
+      { name: 'Silky Black', hex: '#1f2937', image: '/images/oneplus-12.jpg' }
+    ],
+    material: 'Precision Ceramic Texture Back Glass with Aluminum Alloy Frame',
+    features: [
+      '100W wired charging: 1% to 100% in just 26 minutes',
+      '5400mAh dual-cell ultra-capacity battery',
+      '4th Gen Hasselblad Camera with Sony LYT-808 sensor',
+      '2K 120Hz ProXDR Display with 4500 nits peak brightness',
+      'Dual Cryo-velocity VC liquid cooling architecture'
+    ],
+    inStock: true
+  },
+
+  {
+    id: 'phone-google-pixel-9-pro-xl',
+    name: 'Google Pixel 9 Pro (128 GB) - Rose Quartz Pink',
+    targetModel: 'Pixel 9 Pro',
+    category: 'phones',
+    price: 124999,
+    originalPrice: 129999,
+    rating: 4.9,
+    reviewsCount: 410,
+    badge: 'Gemini AI Pure',
+    tagline: 'Google Tensor G4 • Super Res Zoom 30x • 7 Years Android OS Updates',
+    description: 'Engineered by Google with Gemini AI built-in. Features the refined camera visor bar, gorgeous flat polished sides, Google Tensor G4 chipset, and 7 years of guaranteed OS and security updates.',
+    image: '/images/pixel-9-pro.jpg',
+    imageFit: 'contain',
+    gallery: [
+      '/images/pixel-9-pro.jpg'
+    ],
+    compatibleModels: ['Pixel 9 Pro', 'Pixel 9 Pro XL'],
+    colors: [
+      { name: 'Rose Quartz Pink', hex: '#f472b6', image: '/images/pixel-9-pro.jpg', default: true },
+      { name: 'Obsidian Black', hex: '#18181b', image: '/images/pixel-9-pro.jpg' }
+    ],
+    material: 'Silky Matte Glass Back with Polished Metal Frame',
+    features: [
+      'Google Tensor G4 chip tuned for next-gen on-device Gemini AI',
+      'Triple pro rear camera system with 5x optical telephoto',
+      'Best Take, Magic Eraser, and Audio Magic Eraser AI suite',
+      'Super Actua display with 3000 nits peak outdoor brightness',
+      '7 years of direct Google OS feature drops and security updates'
+    ],
+    inStock: true
+  },
+
+  // =========================================================================
+  // 2. POWER BANKS (PORTABLE CHARGING)
+  // =========================================================================
+
+  {
+    id: 'powerbank-ugreen-20k',
+    name: 'UGREEN 20,000mAh Fast Charging Power Bank (Dual USB-A + Type-C)',
+    targetModel: 'Universal iPhone & Android',
+    category: 'powerbanks',
+    price: 2899,
+    originalPrice: 3999,
+    rating: 4.9,
+    reviewsCount: 480,
+    badge: 'LED Display',
+    tagline: '20,000mAh • Smart LED % Display • 22.5W Two-Way Fast Charge • Dual Cables',
+    description: 'High-capacity 20,000mAh battery pack with a crisp digital percentage LED screen. Features dual USB-A quick-charge ports and USB-C Power Delivery. Comes with dedicated fast-charging cables.',
+    image: '/images/powerbank-ugreen-20k.jpg',
+    imageFit: 'contain',
+    gallery: [
+      '/images/powerbank-ugreen-20k.jpg'
+    ],
+    compatibleModels: ['All Smartphones', 'Tablets', 'Earbuds'],
+    colors: [
+      { name: 'Matte Black', hex: '#18181b', image: '/images/powerbank-ugreen-20k.jpg', default: true }
+    ],
+    material: 'Fire-Retardant Polycarbonate + High-Density Li-Polymer Cells',
+    features: [
+      'Precision numerical LED percentage readout',
+      'Charges iPhone 16/17 up to 4.5 times',
+      'Dual 22.5W USB-A outputs + 20W USB-C PD input/output',
+      'Multi-device concurrent safe charging',
+      'Advanced temperature control and surge protection'
+    ],
+    inStock: true
+  },
+
+  {
+    id: 'powerbank-slim-titanium',
+    name: 'SlimTitan™ 10,000mAh Ultra-Slim Metallic Power Bank',
+    targetModel: 'Ultra-Slim Pocket Carry',
+    category: 'powerbanks',
+    price: 1999,
+    originalPrice: 2999,
+    rating: 4.8,
+    reviewsCount: 350,
+    badge: 'Ultra Slim 180g',
+    tagline: 'Aerospace Metallic Shell • 10,000mAh • 22.5W Fast Charge • Pocket Fit',
+    description: 'Sleek, lightweight metallic power bank designed to slip effortlessly into pockets and small bags. Features high-density compact cells, an aluminum alloy finish, and 22.5W fast output.',
+    image: '/images/powerbank-slim-titanium.jpg',
+    imageFit: 'contain',
+    gallery: [
+      '/images/powerbank-slim-titanium.jpg'
+    ],
+    compatibleModels: ['All iPhones', 'Samsung', 'OnePlus', 'Google Pixel'],
+    colors: [
+      { name: 'Titanium Gray', hex: '#4b5563', image: '/images/powerbank-slim-titanium.jpg', default: true }
+    ],
+    material: 'Anodized Aluminum Alloy Casing + Polymer Cells',
+    features: [
+      'Ultra-thin ergonomic profile designed for one-handed carry',
+      '10,000mAh charges smartphones 2 to 2.5 times',
+      '22.5W Super Fast output charges to 50% in 28 mins',
+      'Cool-to-the-touch metallic thermal dissipation',
+      'Airline flight travel approved'
+    ],
+    inStock: true
+  },
+
+  {
+    id: 'powerbank-lavender-cables',
+    name: 'AuraPur™ 10,000mAh Power Bank with 4 Built-In Cables & Lanyard',
+    targetModel: 'All-in-One Built-in Cables',
+    category: 'powerbanks',
+    price: 2199,
+    originalPrice: 3299,
+    rating: 4.9,
+    reviewsCount: 510,
+    badge: '4 Built-In Cables',
+    tagline: '4 Integrated Cables (Type-C, Lightning, Micro, USB) • LED % Screen • Carry Loop',
+    description: 'The ultimate all-in-one charging solution in a gorgeous pastel lavender aesthetic. Comes with 4 built-in cables (Lightning, Type-C, Micro-USB, and USB recharge), a digital battery percentage screen, and an integrated carrying loop.',
+    image: '/images/powerbank-lavender-cables.jpg',
+    imageFit: 'contain',
+    gallery: [
+      '/images/powerbank-lavender-cables.jpg'
+    ],
+    compatibleModels: ['iPhone', 'Android', 'Tablets', 'Audio Devices'],
+    colors: [
+      { name: 'Pastel Lavender', hex: '#c084fc', image: '/images/powerbank-lavender-cables.jpg', default: true }
+    ],
+    material: 'Soft-Touch Matte Polycarbonate + Braided Cable Harness',
+    features: [
+      '4 built-in cables: never carry extra cables again',
+      'Full-view smart digital battery percentage display',
+      'Built-in flexible lanyard strap for easy carrying',
+      'Simultaneous 4-device charging capability',
+      'Overload & short-circuit auto-cutoff safety system'
+    ],
+    inStock: true
+  },
+
+  {
+    id: 'powerbank-crimson-wireless',
+    name: 'VoltEdge™ 20,000mAh Magnetic Wireless MagSafe Power Bank',
+    targetModel: 'MagSafe & Qi Fast Wireless',
+    category: 'powerbanks',
+    price: 3499,
+    originalPrice: 4999,
+    rating: 5.0,
+    reviewsCount: 420,
+    badge: 'Wireless MagSafe',
+    tagline: '15W MagSafe Wireless • 20,000mAh Capacity • LED Meter • Metallic Crimson Red',
+    description: 'High-capacity magnetic wireless power bank in an eye-catching metallic crimson red finish. Features powerful N52 neodymium magnetic snap-on charging, 15W Qi wireless output, numerical LED indicator, and 20W PD Type-C fast port.',
+    image: '/images/powerbank-crimson-wireless.jpg',
+    imageFit: 'contain',
+    gallery: [
+      '/images/powerbank-crimson-wireless.jpg'
+    ],
+    compatibleModels: ['All MagSafe iPhones', 'Qi-Enabled Smartphones'],
+    colors: [
+      { name: 'Crimson Red', hex: '#991b1b', image: '/images/powerbank-crimson-wireless.jpg', default: true }
+    ],
+    material: 'Electroplated Metallic Red Shell + Silicone Wireless Pad',
+    features: [
+      '15W fast magnetic wireless charging with strong N52 grip',
+      'Massive 20,000mAh capacity provides 4+ full smartphone charges',
+      'Circular LED percentage meter display',
+      'Dual wireless and wired simultaneous charging',
+      'Pass-through power architecture'
+    ],
+    inStock: true
+  },
+
+  // =========================================================================
+  // 3. CHARGERS & ADAPTERS (WALL CHARGERS, HUBS & CABLES)
+  // =========================================================================
+
+  {
+    id: 'charger-evm-pd-typec',
+    name: 'EVM™ 25W Type-C Fast Wall Charger with Cable',
+    targetModel: 'Universal iPhone & Android',
+    category: 'chargers',
+    price: 1299,
+    originalPrice: 1999,
+    rating: 4.8,
+    reviewsCount: 380,
+    badge: 'PD Fast Charge',
+    tagline: '25W Power Delivery • Type-C Cable Included • Dual-Pin Indian Plug',
+    description: 'High-speed EVM Type-C fast wall charger engineered for iPhones and Android smartphones. Features intelligent Power Delivery output with orange port accent, low thermal footprint, and includes a durable tangle-free Type-C charging cable.',
+    image: '/images/charger-evm-pd-typec.jpg',
+    imageFit: 'contain',
+    gallery: [
+      '/images/charger-evm-pd-typec.jpg'
+    ],
+    compatibleModels: ['iPhone 16/15 Series', 'Samsung Galaxy', 'OnePlus', 'Pixel'],
+    colors: [
+      { name: 'Glossy White', hex: '#ffffff', image: '/images/charger-evm-pd-typec.jpg', default: true }
+    ],
+    material: 'Flame-Retardant Polycarbonate + Pure Copper Core',
+    features: [
+      '25W Power Delivery fast charging with high thermal efficiency',
+      'Includes durable Type-C to Type-C fast charging cable',
+      'BIS certified safety with over-voltage and short-circuit protection',
+      'Universal Indian dual-pin wall plug socket fit',
+      'Compact pocket-friendly travel profile'
+    ],
+    inStock: true
+  },
+
+  {
+    id: 'charger-barrett-travel-adapter',
+    name: 'Barrett™ BIS Certified Quick Charge Fast Travel Adapter',
+    targetModel: 'Travel & Daily Charging',
+    category: 'chargers',
+    price: 899,
+    originalPrice: 1499,
+    rating: 4.7,
+    reviewsCount: 420,
+    badge: 'Made in India',
+    tagline: 'BIS Certified IS 13252 • Dual Mode 5V/2A & 9V/2A • Cable Included',
+    description: 'Reliable Made in India fast travel adapter certified under IS 13252 (Part 1)/IEC 60950-1 (R-81017930). Delivers stable 5.0V/2.0A and 9.0V/2.0A adaptive fast charging with included durable white sync & charge cable.',
+    image: '/images/charger-barrett-travel-adapter.jpg',
+    imageFit: 'contain',
+    gallery: [
+      '/images/charger-barrett-travel-adapter.jpg'
+    ],
+    compatibleModels: ['All Smartphones', 'Tablets', 'Bluetooth Audio Gear'],
+    colors: [
+      { name: 'Classic White', hex: '#f8fafc', image: '/images/charger-barrett-travel-adapter.jpg', default: true }
+    ],
+    material: 'Heavy-Duty ABS Fireproof Casing',
+    features: [
+      'Official BIS Certified under IS 13252 / IEC 60950-1 (R-81017930)',
+      'Adaptive dual-rate output: 5.0V=2.0A & 9.0V=2.0A fast charge',
+      'Includes high-grade sync and charge cable in box',
+      'Surge and fluctuation protection engineered for Indian sockets',
+      'Sturdy two-pin Indian socket grip'
+    ],
+    inStock: true
+  },
+
+  {
+    id: 'charger-wireless-pad-slimglow',
+    name: 'SlimGlow™ 15W Qi Fast Wireless Charging Pad',
+    targetModel: 'Universal Qi Wireless Phones & Earbuds',
+    category: 'chargers',
+    price: 1499,
+    originalPrice: 2299,
+    rating: 4.9,
+    reviewsCount: 560,
+    badge: '15W Wireless',
+    tagline: 'Ultra-Slim 6mm Profile • Textured Grip Surface • Smart Blue LED Indicator',
+    description: 'Sleek, minimalist 15W Qi fast wireless charging pad. Place your iPhone or Android phone down to power up immediately. Features non-slip textured finish, blue glowing charging indicator, and automatic foreign object detection (FOD).',
+    image: '/images/charger-wireless-pad-slimglow.jpg',
+    imageFit: 'contain',
+    gallery: [
+      '/images/charger-wireless-pad-slimglow.jpg'
+    ],
+    compatibleModels: ['All Qi-Enabled iPhones', 'Samsung Galaxy', 'Pixel', 'Wireless Earbuds'],
+    colors: [
+      { name: 'Matte Obsidian Black', hex: '#18181b', image: '/images/charger-wireless-pad-slimglow.jpg', default: true }
+    ],
+    material: 'Heat-Dissipating Aluminum Base + Textured Non-Slip Charging Mat',
+    features: [
+      '15W peak Qi fast wireless charging speed',
+      'Ultra-slim 6mm low-profile aesthetic for neat desks & nightstands',
+      'Subtle ambient blue charging indicator glow',
+      'Intelligent temperature monitoring & Foreign Object Detection (FOD)',
+      'Charges through cases up to 5mm thick'
+    ],
+    inStock: true
+  },
+
+  {
+    id: 'charger-portronics-magsafe-stand',
+    name: 'Portronics™ MagSafe 2-in-1 Fast Wireless Charging Stand & Ambient Lamp',
+    targetModel: 'MagSafe iPhones & Wireless Accessories',
+    category: 'chargers',
+    price: 2799,
+    originalPrice: 3999,
+    rating: 5.0,
+    reviewsCount: 640,
+    badge: 'MagSafe Dock',
+    tagline: '15W Magnetic Floating Dock • Halo LED Charging Ring • Warm Ambient Nightlight',
+    description: 'Premium Portronics dual-purpose wireless charging stand. Features a strong magnetic MagSafe floating head that suspends your phone in portrait or landscape while charging at 15W, paired with a soft warm ambient nightlight base.',
+    image: '/images/charger-portronics-magsafe-stand.jpg',
+    imageFit: 'contain',
+    gallery: [
+      '/images/charger-portronics-magsafe-stand.jpg'
+    ],
+    compatibleModels: ['iPhone 12 to 16 Pro Max', 'MagSafe Cases', 'Wireless Earbuds'],
+    colors: [
+      { name: 'Stealth Matte Black', hex: '#0f172a', image: '/images/charger-portronics-magsafe-stand.jpg', default: true }
+    ],
+    material: 'Aviation Zinc Alloy Arm + Weighted Anti-Tip Base',
+    features: [
+      '15W high-speed magnetic MagSafe wireless snap-on charging',
+      'Dual orientation: browse reels in portrait or watch videos in landscape',
+      'Built-in soft warm ambient night lamp with one-touch toggle',
+      'Illuminated blue LED halo charging indicator ring',
+      'Heavy weighted anti-slip base ensures single-hand phone detachment'
+    ],
+    inStock: true
+  },
+
+  // =========================================================================
+  // 4. EARPODS & WIRELESS AUDIO (APPLE AIRPODS, GALAXY BUDS & PRO AUDIO)
+  // =========================================================================
+
+  {
+    id: 'earpods-airpods-pro-2',
+    name: 'Apple AirPods Pro (2nd Gen) with MagSafe Case (USB-C)',
+    targetModel: 'Apple H2 Chip • MagSafe USB-C',
+    category: 'earpods',
+    price: 24900,
+    originalPrice: 26900,
+    rating: 5.0,
+    reviewsCount: 1240,
+    badge: 'Pro Active Noise Cancellation',
+    tagline: 'Up to 2x More Active Noise Cancellation • Adaptive Audio • USB-C',
+    description: 'The pinnacle of wireless audio engineering. Features Apple H2 chip, up to 2x more Active Noise Cancellation, Adaptive Audio that tailors noise control to your environment, Personalized Spatial Audio with dynamic head tracking, and MagSafe Case (USB-C) with Precision Finding speaker.',
+    image: '/images/earpods-pro-2-anc.jpg',
+    imageFit: 'contain',
+    gallery: [
+      '/images/earpods-pro-2-anc.jpg'
+    ],
+    compatibleModels: ['All iPhones', 'iPad', 'MacBook', 'Apple Watch', 'Android Devices'],
+    colors: [
+      { name: 'Gloss White', hex: '#ffffff', image: '/images/earpods-pro-2-anc.jpg', default: true }
+    ],
+    material: 'Medical-Grade Silicone Ear Tips + Recycled Polymer Charging Case',
+    features: [
+      'Apple H2 headphone chip for intelligent noise cancellation and 3D sound',
+      'Adaptive Audio blends Active Noise Cancellation and Transparency mode',
+      'Personalized Spatial Audio with dynamic head tracking places sound around you',
+      'MagSafe Charging Case (USB-C) with built-in speaker and lanyard loop',
+      'Up to 6 hours listening time on a single charge (30 hours with case)',
+      'Dust, sweat, and water resistant (IP54)'
+    ],
+    inStock: true
+  },
+
+  {
+    id: 'earpods-airpods-4-anc',
+    name: 'Apple AirPods 4 with Active Noise Cancellation',
+    targetModel: 'Open-Ear Fit • H2 Chip',
+    category: 'earpods',
+    price: 17900,
+    originalPrice: 19900,
+    rating: 4.9,
+    reviewsCount: 890,
+    badge: 'Open-Ear ANC',
+    tagline: 'Active Noise Cancellation in an Open-Ear Design • H2 Chip • Wireless Charging',
+    description: 'A transformed audio experience with Active Noise Cancellation in an open-ear design. Powered by Apple H2 chip delivering crystal-clear calls with Voice Isolation, hands-free Siri interactions with head gestures, and an ultra-compact wireless charging case with Find My speaker.',
+    image: '/images/earpods-air-wireless.jpg',
+    imageFit: 'contain',
+    gallery: [
+      '/images/earpods-air-wireless.jpg'
+    ],
+    compatibleModels: ['All iPhones', 'iPad', 'MacBook', 'Apple Watch', 'Android'],
+    colors: [
+      { name: 'Classic Gloss White', hex: '#f8fafc', image: '/images/earpods-air-wireless.jpg', default: true }
+    ],
+    material: 'Precision Ergonomic Contoured Acoustic Shell',
+    features: [
+      'First open-ear AirPods design featuring Active Noise Cancellation',
+      'Apple H2 chip powers Voice Isolation and hands-free Siri head gestures',
+      'Personalized Spatial Audio with dynamic head tracking',
+      'Smallest AirPods wireless charging case with built-in speaker',
+      'Up to 30 hours of total listening time with USB-C / Apple Watch charger',
+      'IP54 dust, sweat, and water resistant'
+    ],
+    inStock: true
+  },
+
+  {
+    id: 'earpods-galaxy-buds3-pro',
+    name: 'Samsung Galaxy Buds3 Pro - Blade Design True Wireless',
+    targetModel: 'Hi-Res 24-bit 96kHz • Galaxy AI',
+    category: 'earpods',
+    price: 19999,
+    originalPrice: 22999,
+    rating: 4.9,
+    reviewsCount: 650,
+    badge: 'Galaxy AI Audio',
+    tagline: 'Iconic Blade Design • Blade Lights • 24-bit Hi-Fi Ultra Audio • Adaptive Noise Control',
+    description: 'Revolutionary blade stem design with interactive LED blade lights and intuitive pinch gestures. Features dual-amp 2-way speakers with planar tweeters, Galaxy AI-powered real-time voice interpreter, Adaptive ANC that auto-adjusts to sirens and conversations, and 24-bit 96kHz lossless audio.',
+    image: '/images/earpods-spatial-audio.jpg',
+    imageFit: 'contain',
+    gallery: [
+      '/images/earpods-spatial-audio.jpg'
+    ],
+    compatibleModels: ['Samsung Galaxy S24/S23', 'iPhones', 'Android Smartphones', 'PC/Laptops'],
+    colors: [
+      { name: 'Silver Metallic Titanium', hex: '#4b5563', image: '/images/earpods-spatial-audio.jpg', default: true }
+    ],
+    material: 'Aerospace Ergonomic Resin with Cyber Blade LED Accents',
+    features: [
+      'Ergonomic blade design with illuminated LED blade status lights',
+      'Ultimate Hi-Fi sound with dual-amplifier and 2-way planar tweeter drivers',
+      'Galaxy AI real-time face-to-face Interpreter and Live Translate in your ears',
+      'Adaptive Noise Control and Siren/Voice auto-detection modes',
+      'Up to 30 hours playback with wireless Qi charging case',
+      'IP57 water and dust resistance'
+    ],
+    inStock: true
+  },
+
+  {
+    id: 'earpods-prosound-sport-anc',
+    name: 'ProSound™ ANC True Wireless EarPods with Spatial Audio',
+    targetModel: 'Bluetooth 5.4 • 42dB Hybrid ANC',
+    category: 'earpods',
+    price: 3999,
+    originalPrice: 5999,
+    rating: 4.8,
+    reviewsCount: 780,
+    badge: '42dB Hybrid ANC',
+    tagline: 'Deep Bass 11mm Drivers • 36Hr Total Battery • Wireless Charging Case • IPX5',
+    description: 'High-performance active noise cancelling wireless ear pods with immersive 360° Spatial Audio. Equipped with 11mm titanium dynamic drivers, 6 beamforming microphones with neural AI voice clarity, fast pairing for iOS and Android, and a pocket-friendly wireless charging case.',
+    image: '/images/earpods-sport-active.jpg',
+    imageFit: 'contain',
+    gallery: [
+      '/images/earpods-sport-active.jpg'
+    ],
+    compatibleModels: ['All Bluetooth Devices (iOS, Android, Mac, Windows)'],
+    colors: [
+      { name: 'Stealth Matte Black', hex: '#18181b', image: '/images/earpods-sport-active.jpg', default: true }
+    ],
+    material: 'Silky Matte Nano-Coating + Medical-Grade Ergonomic Ear Tips',
+    features: [
+      '42dB Hybrid Active Noise Cancellation + Natural Transparency Mode',
+      'Dynamic 360° Spatial Audio with head-tracking algorithm',
+      '36 hours total playback with Qi wireless & Type-C fast charging case',
+      '6 beamforming microphones with deep AI neural noise suppression',
+      'Ultra-low 45ms gaming latency mode',
+      'IPX5 sweat and splash resistance for sports and fitness'
+    ],
+    inStock: true
   }
 ];

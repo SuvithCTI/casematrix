@@ -1,12 +1,34 @@
 import React from 'react';
-import { SlidersHorizontal, X, Smartphone, Search } from 'lucide-react';
+import {
+  SlidersHorizontal,
+  X,
+  Smartphone,
+  Search,
+  Sparkles,
+  Shield,
+  BatteryCharging,
+  Zap,
+  Headphones,
+  CheckCircle2
+} from 'lucide-react';
 import { useProduct } from '../../context/ProductContext';
-import { IPHONE_MODELS } from '../../data/categories';
+import { IPHONE_MODELS, CATEGORIES } from '../../data/categories';
 import DesktopProductCard from './DesktopProductCard';
+
+const CATEGORY_ICONS = {
+  Sparkles,
+  Smartphone,
+  Shield,
+  BatteryCharging,
+  Zap,
+  Headphones
+};
 
 export default function DesktopProductGrid() {
   const {
     filteredProducts,
+    selectedCategory,
+    setSelectedCategory,
     selectedSeries,
     setSelectedSeries,
     selectedModel,
@@ -15,7 +37,6 @@ export default function DesktopProductGrid() {
     setSortBy,
     searchQuery,
     setSearchQuery,
-    setSelectedCategory,
   } = useProduct();
 
   const SERIES_LIST = [
@@ -40,8 +61,10 @@ export default function DesktopProductGrid() {
     setSelectedModel(modelId);
   };
 
+  const defaultCategory = CATEGORIES[0]?.id || 'phones';
+
   const resetFilters = () => {
-    setSelectedCategory('all');
+    setSelectedCategory(defaultCategory);
     setSelectedSeries('all');
     setSelectedModel('all');
     setSearchQuery('');
@@ -49,50 +72,97 @@ export default function DesktopProductGrid() {
   };
 
   const hasActiveFilters =
+    selectedCategory !== defaultCategory ||
     selectedSeries !== 'all' ||
     selectedModel !== 'all' ||
     searchQuery !== '';
 
+  const activeCategoryObj = CATEGORIES.find(c => c.id === selectedCategory) || CATEGORIES[0];
+
   return (
-    <section className="w-full space-y-6">
+    <section className="w-full space-y-5">
       {/* ========================================================
-          CLEAN & MINIMAL TOP IPHONE FILTER BAR
+          1. CATEGORY TABS (All, Phones, Cases, Power Banks, Chargers, Accessories)
          ======================================================== */}
-      <div className="bg-white rounded-2xl sm:rounded-3xl p-3 sm:p-5 border border-slate-200/90 shadow-xs space-y-2.5 sm:space-y-3">
-        {/* Row 1: Series Selector + Search & Sort */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+        {CATEGORIES.map((cat) => {
+          const IconComp = CATEGORY_ICONS[cat.icon] || Sparkles;
+          const isActive = selectedCategory === cat.id;
+          return (
+            <button
+              key={cat.id}
+              type="button"
+              onClick={() => {
+                setSelectedCategory(cat.id);
+                if (cat.id !== 'cases') {
+                  setSelectedSeries('all');
+                  setSelectedModel('all');
+                }
+              }}
+              className={`px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 shrink-0 active:scale-95 shadow-xs ${
+                isActive
+                  ? 'bg-slate-900 text-white shadow-md shadow-slate-900/20 ring-2 ring-slate-900'
+                  : 'bg-white text-slate-700 hover:text-slate-900 hover:bg-slate-50 border border-slate-200'
+              }`}
+            >
+              <IconComp className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isActive ? 'text-amber-400' : 'text-amber-600'}`} />
+              <span>{cat.name}</span>
+              <span className={`text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-black ${
+                isActive ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'
+              }`}>
+                {cat.count}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* ========================================================
+          2. FILTER & CONTROLS TOOLBAR
+         ======================================================== */}
+      <div className="bg-white rounded-2xl sm:rounded-3xl p-3 sm:p-5 border border-slate-200/90 shadow-xs space-y-3">
+        {/* Row 1: Category Info / Series Switcher + Search & Sort */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-2.5 sm:gap-3">
-          {/* iPhone Series Switcher */}
-          <div className="flex items-center gap-1 p-1 bg-slate-100 rounded-xl sm:rounded-2xl overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] max-w-full">
-            <span className="text-[11px] sm:text-xs font-bold text-slate-600 px-2 sm:px-2.5 flex items-center gap-1 shrink-0">
-              <Smartphone className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-600" /> Series:
-            </span>
-            {SERIES_LIST.map((s) => {
-              const isActive = selectedSeries === s.id;
-              return (
-                <button
-                  key={s.id}
-                  type="button"
-                  onClick={() => handleSeriesChange(s.id)}
-                  className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all whitespace-nowrap shrink-0 active:scale-95 ${
-                    isActive
-                      ? 'bg-slate-900 text-white shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
-                  }`}
-                >
-                  {s.label}
-                </button>
-              );
-            })}
-          </div>
+          {selectedCategory === 'cases' ? (
+            /* iPhone Series Switcher when Cases category is selected */
+            <div className="flex items-center gap-1 p-1 bg-slate-100 rounded-xl sm:rounded-2xl overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] max-w-full">
+              <span className="text-[11px] sm:text-xs font-bold text-slate-600 px-2 sm:px-2.5 flex items-center gap-1 shrink-0">
+                <Smartphone className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-600" /> Series:
+              </span>
+              {SERIES_LIST.map((s) => {
+                const isActive = selectedSeries === s.id;
+                return (
+                  <button
+                    key={s.id}
+                    type="button"
+                    onClick={() => handleSeriesChange(s.id)}
+                    className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all whitespace-nowrap shrink-0 active:scale-95 ${
+                      isActive
+                        ? 'bg-slate-900 text-white shadow-xs'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+                    }`}
+                  >
+                    {s.label}
+                  </button>
+                );
+              })}
+            </div>
+          ) : (
+            /* Category Description Ribbon for Non-Case categories */
+            <div className="flex items-center gap-2 text-xs text-slate-600 py-1">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span className="font-semibold text-slate-800 line-clamp-1">{activeCategoryObj.description}</span>
+            </div>
+          )}
 
           {/* Search & Sort Controls */}
-          <div className="flex items-center gap-2 w-full md:w-auto justify-between md:justify-end">
+          <div className="flex items-center gap-2 w-full md:w-auto justify-between md:justify-end shrink-0">
             {/* Search Input */}
-            <div className="relative flex-1 md:w-44">
+            <div className="relative flex-1 md:w-52">
               <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
-                placeholder="Search..."
+                placeholder="Search products, models..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-8 pr-7 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-amber-500"
@@ -128,7 +198,7 @@ export default function DesktopProductGrid() {
                 type="button"
                 onClick={resetFilters}
                 className="p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 hover:bg-rose-100 text-xs font-bold flex items-center justify-center transition shrink-0"
-                title="Reset Filters"
+                title="Reset All Filters"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -136,51 +206,53 @@ export default function DesktopProductGrid() {
           </div>
         </div>
 
-        {/* Row 2: Specific Model Selection for the Chosen Series */}
-        <div className="pt-2 border-t border-slate-100 flex items-center gap-1.5 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pb-0.5">
-          <button
-            type="button"
-            onClick={() => handleModelChange('all')}
-            className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition whitespace-nowrap shrink-0 active:scale-95 ${
-              selectedModel === 'all'
-                ? 'bg-amber-600 text-white shadow-xs font-black'
-                : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
-            }`}
-          >
-            All Models
-          </button>
+        {/* Row 2: Specific iPhone Model Selector (Only shown if 'cases' is active) */}
+        {selectedCategory === 'cases' && (
+          <div className="pt-2 border-t border-slate-100 flex items-center gap-1.5 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pb-0.5">
+            <button
+              type="button"
+              onClick={() => handleModelChange('all')}
+              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition whitespace-nowrap shrink-0 active:scale-95 ${
+                selectedModel === 'all'
+                  ? 'bg-amber-600 text-white shadow-xs font-black'
+                  : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+              }`}
+            >
+              All Models
+            </button>
 
-          {currentSeriesModels.map((m) => {
-            const isSelected = selectedModel === m.id;
-            return (
-              <button
-                key={m.id}
-                type="button"
-                onClick={() => handleModelChange(m.id)}
-                className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition whitespace-nowrap shrink-0 active:scale-95 ${
-                  isSelected
-                    ? 'bg-amber-600 text-white shadow-xs font-black'
-                    : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
-                }`}
-              >
-                {m.name}
-              </button>
-            );
-          })}
-        </div>
+            {currentSeriesModels.map((m) => {
+              const isSelected = selectedModel === m.id;
+              return (
+                <button
+                  key={m.id}
+                  type="button"
+                  onClick={() => handleModelChange(m.id)}
+                  className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition whitespace-nowrap shrink-0 active:scale-95 ${
+                    isSelected
+                      ? 'bg-amber-600 text-white shadow-xs font-black'
+                      : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                  }`}
+                >
+                  {m.name}
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* ========================================================
-          FULL-WIDTH PRODUCT GRID (2 Columns on Mobile, 4 on Desktop)
+          3. PRODUCT GRID (2 Columns on Mobile, 4 on Desktop)
          ======================================================== */}
       {filteredProducts.length === 0 ? (
         <div className="p-10 sm:p-16 text-center rounded-3xl bg-white border border-slate-200 space-y-3 shadow-xs w-full">
           <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-slate-100 mx-auto flex items-center justify-center text-slate-400">
-            <Smartphone className="w-6 h-6 sm:w-7 sm:h-7" />
+            <Sparkles className="w-6 h-6 sm:w-7 sm:h-7 text-amber-600" />
           </div>
-          <h4 className="text-base sm:text-lg font-bold text-slate-900">No iPhone covers found</h4>
+          <h4 className="text-base sm:text-lg font-bold text-slate-900">No products found</h4>
           <p className="text-xs text-slate-500 max-w-sm mx-auto">
-            Try resetting your filters or selecting "All Models" to see the full lineup.
+            Try adjusting your search query, selecting another category, or resetting all filters.
           </p>
           <button
             type="button"

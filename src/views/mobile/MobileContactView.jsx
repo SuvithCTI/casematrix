@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageSquare, Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react';
+import { MessageSquare, Mail, MapPin, Send, CheckCircle2 } from 'lucide-react';
 import { useOrder } from '../../context/OrderContext';
 
 export default function MobileContactView() {
@@ -20,7 +20,7 @@ export default function MobileContactView() {
   };
 
   const handleWhatsApp = () => {
-    const supportPhone = '919384694189';
+    const supportPhone = '919876543210';
     const text = `Hi Case Matrix! I'm ${formData.name || 'a customer'} needing assistance with iPhone cases in India.`;
     window.open(`https://wa.me/${supportPhone}?text=${encodeURIComponent(text)}`, '_blank');
   };
@@ -57,7 +57,7 @@ export default function MobileContactView() {
           onClick={handleWhatsApp}
           className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-md"
         >
-          <MessageSquare className="w-4 h-4" /> Message on WhatsApp (+91 93846 94189)
+          <MessageSquare className="w-4 h-4" /> Message on WhatsApp (+91 98765 43210)
         </button>
       </div>
 
@@ -105,7 +105,7 @@ export default function MobileContactView() {
                 rows={3}
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                placeholder="How can we help with your iPhone setup? *"
+                placeholder="How can we help with your mobiles & accessories setup? *"
                 className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white"
               />
             </div>

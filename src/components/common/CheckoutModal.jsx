@@ -152,7 +152,7 @@ export default function CheckoutModal() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  placeholder="+91 93846 94189"
+                  placeholder="+91 98765 43210"
                   className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white"
                 />
               </div>

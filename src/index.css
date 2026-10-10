@@ -60,3 +60,8 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #86868b;
 }
+
+@keyframes progress {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}

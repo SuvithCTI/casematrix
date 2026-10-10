@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Shield, Zap, Eye, RotateCw, Check, Layers, Type } from 'lucide-react';
+import { Sparkles, Zap } from 'lucide-react';
 
 export default function InteractiveCaseViewer({
   product,

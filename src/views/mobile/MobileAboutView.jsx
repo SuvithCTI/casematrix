@@ -16,9 +16,9 @@ export default function MobileAboutView() {
         <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold uppercase tracking-wider inline-flex items-center gap-1">
           <Award className="w-3 h-3 text-amber-400" /> Engineering & Craft
         </span>
-        <h2 className="text-2xl font-black text-white">Built for iPhone</h2>
+        <h2 className="text-2xl font-black text-white">Mobiles & Accessories</h2>
         <p className="text-xs text-slate-300 leading-relaxed">
-          Crafting titanium cases, 15W Qi2 MagSafe accessories, and 9H sapphire camera armor across India.
+          Offering flagship 5G smartphones, aerospace titanium armor cases, high-capacity power banks, and wireless gear across India.
         </p>
       </div>
 
@@ -37,17 +37,17 @@ export default function MobileAboutView() {
         <div className="p-4 rounded-2xl bg-white border border-slate-200 space-y-2 shadow-xs">
           <div className="flex items-center gap-2 text-amber-700">
             <ShieldCheck className="w-5 h-5 text-amber-600" />
-            <h4 className="text-xs font-bold text-slate-900">16FT Military Drop Test</h4>
+            <h4 className="text-xs font-bold text-slate-900">16FT Military Drop Armor</h4>
           </div>
-          <p className="text-xs text-slate-700 leading-relaxed">MIL-STD-810H reinforced corner bumpers protect fragile iPhone rear glass.</p>
+          <p className="text-xs text-slate-700 leading-relaxed">MIL-STD-810H reinforced titanium chassis and shock corners protect flagship smartphones from drops.</p>
         </div>
 
         <div className="p-4 rounded-2xl bg-white border border-slate-200 space-y-2 shadow-xs">
           <div className="flex items-center gap-2 text-amber-700">
             <Zap className="w-5 h-5 text-amber-600" />
-            <h4 className="text-xs font-bold text-slate-900">38 N52 MagSafe Array</h4>
+            <h4 className="text-xs font-bold text-slate-900">MagSafe & 20,000mAh Power</h4>
           </div>
-          <p className="text-xs text-slate-700 leading-relaxed">Twice the magnetic strength of ordinary cases for secure car mounts & 15W charging.</p>
+          <p className="text-xs text-slate-700 leading-relaxed">High-capacity portable banks, 38 N52 magnetic docks, and fast GaN chargers built for device longevity.</p>
         </div>
       </div>
     </div>

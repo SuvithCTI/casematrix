@@ -43,12 +43,6 @@ export default function MobileProductCard({ product }) {
         <div className="relative aspect-square w-full rounded-xl bg-slate-50 overflow-hidden mb-2 flex items-center justify-center border border-slate-100">
           <img src={currentImage} alt={product.name} className={`w-full h-full ${product.imageFit === 'contain' ? 'object-contain p-1' : 'object-cover'} transition-all duration-300`} />
 
-          {product.badge && (
-            <span className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-full bg-slate-900 text-white text-[9px] font-extrabold">
-              {product.badge}
-            </span>
-          )}
-
           {product.isCustomizable && (
             <button
               type="button"
@@ -60,54 +54,39 @@ export default function MobileProductCard({ product }) {
           )}
         </div>
 
-        {/* Model Match Pill */}
-        {product.targetModel && (
-          <div className="mb-1">
+        {/* Model Match or Category Pill */}
+        <div className="mb-1">
+          {product.targetModel ? (
             <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-amber-50 border border-amber-200/60 text-[9px] font-bold text-amber-900 truncate max-w-full">
               <Smartphone className="w-2.5 h-2.5 text-amber-600 shrink-0" />
               <span className="truncate">{product.targetModel}</span>
             </span>
-          </div>
-        )}
+          ) : (
+            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-slate-100 text-[9px] font-bold text-slate-700 capitalize">
+              {product.category === 'phones' ? 'Smartphone' : product.category === 'powerbanks' ? 'Power Bank' : product.category === 'chargers' ? 'Fast Charger' : (product.category === 'accessories' ? 'Accessory' : 'Official')}
+            </span>
+          )}
+        </div>
 
-        {/* Rating & Series */}
+        {/* Rating & Feature Tag */}
         <div className="flex items-center justify-between text-[10px] mb-1">
           <div className="flex items-center gap-0.5 text-amber-500">
             <Star className="w-3 h-3 fill-amber-500" />
             <span className="font-bold text-slate-900">{product.rating}</span>
             <span className="text-slate-600 font-semibold">({product.reviewsCount})</span>
           </div>
-          <span className="text-amber-800 font-bold text-[9px]">MagSafe</span>
+          <span className="text-amber-800 font-bold text-[9px]">
+            {product.category === 'cases' ? 'MagSafe' : product.category === 'phones' ? '5G Flagship' : product.category === 'powerbanks' ? 'Fast Charge' : product.category === 'chargers' ? 'GaN Fast' : 'Certified'}
+          </span>
         </div>
 
         {/* Name */}
         <h4 className="text-xs font-bold text-slate-900 line-clamp-2 leading-snug">{product.name}</h4>
       </div>
 
-      {/* Colors & Price */}
-      <div className="mt-2.5 pt-2 border-t border-slate-100 space-y-2">
-        {/* Color Bubbles with Real-Time Switching */}
-        {product.colors && product.colors.length > 0 && (
-          <div className="flex items-center gap-1 overflow-x-auto pb-0.5">
-            {product.colors.map((c) => (
-              <button
-                key={c.name}
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setActiveColor(c);
-                }}
-                className={`w-3.5 h-3.5 rounded-full border shrink-0 transition-transform ${
-                  activeColor?.name === c.name ? 'border-amber-600 scale-125 ring-1 ring-amber-500/40' : 'border-slate-300'
-                }`}
-                style={{ backgroundColor: c.hex }}
-                title={c.name}
-              />
-            ))}
-          </div>
-        )}
-
-        <div className="flex items-center justify-between gap-1 pt-1">
+      {/* Price & Actions */}
+      <div className="mt-2.5 pt-2 border-t border-slate-100">
+        <div className="flex items-center justify-between gap-1">
           <div>
             <span className="text-xs sm:text-sm font-black text-slate-900">₹{product.price.toLocaleString('en-IN')}</span>
             {product.originalPrice && (

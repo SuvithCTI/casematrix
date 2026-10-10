@@ -60,21 +60,13 @@ export const IPHONE_MODELS = [
 ];
 
 export const CATEGORIES = [
-  { id: 'all', name: 'All Products', count: 36 },
-  { id: 'cases', name: 'iPhone MagSafe Cases', count: 30, description: 'Titanium Armor, Velvet Silicone, Leather, Clear & Aramid Carbon' },
-  { id: 'magsafe', name: 'MagSafe Wireless Gear', count: 2, description: '15W Qi2 Foldable Stands & Magnetic RFID Wallets' },
-  { id: 'protection', name: 'Screen & Lens Armor', count: 2, description: '9H Sapphire Camera Rings & 28° Privacy Glass' },
-  { id: 'chargers', name: 'GaN Fast Chargers & Cables', count: 2, description: '65W Dual Port GaN & 240W Kevlar Cables' },
+  { id: 'phones', name: 'Mobile Phones', icon: 'Smartphone', count: 6, description: 'Flagship Smartphones: iPhone 16 Pro Max, iPhone 17, Galaxy S24 Ultra, Pixel & OnePlus' },
+  { id: 'cases', name: 'Cases & Covers', icon: 'Shield', count: 30, description: 'Titanium Armor, Velvet Silicone, Leather, Clear & Anime Designer Covers' },
+  { id: 'powerbanks', name: 'Power Banks', icon: 'BatteryCharging', count: 4, description: 'High-Capacity 20,000mAh, Ultra-Slim Metallic & Built-in Cable Fast Charging Power Banks' },
+  { id: 'chargers', name: 'Fast Chargers', icon: 'Zap', count: 4, description: 'EVM 25W PD Wall Chargers, BIS Travel Adapters, 15W Wireless Pads & Portronics MagSafe Stands' },
+  { id: 'earpods', name: 'EarPods', icon: 'Headphones', count: 4, description: 'Apple AirPods Pro 2, AirPods 4, Galaxy Buds3 Pro & Spatial Audio Wireless EarPods' },
 ];
 
-export const CASE_TYPES = [
-  { id: 'all', name: 'All Case Styles' },
-  { id: 'magsafe-armor', name: 'Titanium Armor' },
-  { id: 'silicone', name: 'Velvet Liquid Silicone' },
-  { id: 'clear', name: 'Lumina Anti-Yellow Clear' },
-  { id: 'leather', name: 'Italian Vegan Leather' },
-  { id: 'carbon', name: 'Aramid Carbon Kevlar' },
-];
 
 export const COLOR_OPTIONS = [
   { id: 'desert-titanium', name: 'Desert Titanium Gold', hex: '#c5b49e', accent: '#eab308' },

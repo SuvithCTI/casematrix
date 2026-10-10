@@ -1,24 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Package, 
-  ShoppingBag, 
-  Truck, 
-  CheckCircle2, 
-  Clock, 
-  ArrowRight, 
-  Printer, 
-  MessageSquare, 
-  MapPin, 
-  Copy, 
-  Check, 
-  Sparkles,
-  ArrowLeft,
-  User,
-  CreditCard,
-  RefreshCw,
-  Phone,
-  LogOut
-} from 'lucide-react';
+import { Package, Printer, MessageSquare, MapPin, Copy, Check, ArrowLeft, User, RefreshCw, LogOut } from 'lucide-react';
 import { useOrder } from '../../context/OrderContext';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
@@ -56,7 +37,7 @@ export default function DesktopOrdersView({ setActiveTab }) {
   };
 
   const handleWhatsAppSupport = (order) => {
-    const supportPhone = '919384694189';
+    const supportPhone = '919876543210';
     const text = `Hi Case Matrix! I'd like to check dispatch status for my order *#${order.orderId}*.\nName: ${order.customer?.name}\nTotal: ₹${order.pricing?.total?.toLocaleString('en-IN')}`;
     window.open(`https://wa.me/${supportPhone}?text=${encodeURIComponent(text)}`, '_blank');
   };

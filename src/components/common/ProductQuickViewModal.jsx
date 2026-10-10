@@ -37,7 +37,7 @@ export default function ProductQuickViewModal() {
     const customer = {
       name: currentUser?.name || 'Storefront Visitor',
       email: currentUser?.email || 'customer@casematrix.in',
-      phone: currentUser?.phone || '+91 93846 94189',
+      phone: currentUser?.phone || '+91 98765 43210',
       address: 'WhatsApp Direct Order',
       city: 'Express Avenue',
       state: 'Tamil Nadu',
@@ -104,11 +104,6 @@ export default function ProductQuickViewModal() {
                 decoding="async"
                 className={`w-full h-full ${quickViewProduct.imageFit === 'contain' ? 'object-contain p-2' : 'object-cover'} group-hover:scale-105 transition duration-500`}
               />
-              {quickViewProduct.badge && (
-                <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-slate-900 text-white text-xs font-bold shadow-sm">
-                  {quickViewProduct.badge}
-                </span>
-              )}
             </div>
 
             {/* Thumbnail Carousel for Multiple Images */}
@@ -164,7 +159,7 @@ export default function ProductQuickViewModal() {
             {quickViewProduct.compatibleModels && (
               <div>
                 <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wider block mb-1.5">
-                  Select iPhone Model
+                  Select {quickViewProduct.category === 'cases' ? 'iPhone Model' : 'Compatibility / Model'}
                 </label>
                 <select
                   value={activeModel}
